@@ -2,12 +2,18 @@ package vn.hoidanit.laptopshop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RestController;
 
+import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UserService;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 
 // import vn.hoidanit.laptopshop.service.UserService;
@@ -35,15 +41,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/user", method = RequestMethod.GET)
-    public String getUserPage(){
-        
+    public String getUserPage(Model model){
+        model.addAttribute("newUser", new User());
         return "admin/user/create";
     }
 
+    // @RequestMapping("/newUser", method=RequestMethod.GET)
+    // public ModelAndView showForm() {
+    //     return new ModelAndView("newUserHome", "newUser", new User());
+    // }
+    
+
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String createUserPage(){
-        System.out.println("run here");
-        return "hello";
+    public void submitNewUser(Model model, @ModelAttribute("newUser") User hoidanit){
+        System.out.println("run here " + hoidanit.toString());
+        //return "hello";
     }
     
 
