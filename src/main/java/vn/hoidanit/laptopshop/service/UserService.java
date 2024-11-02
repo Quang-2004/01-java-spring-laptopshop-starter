@@ -25,10 +25,30 @@ public class UserService {
     }
 
     public List<User> findByEmailAndAddress(String email, String address){
-        return userRepository.findByEmailAndAddress(email, address);
+        return this.userRepository.findByEmailAndAddress(email, address);
     }
 
     public User handleSaveUser(User user){
         return userRepository.save(user);
     }
+
+    public User findById(long id){
+        return this.userRepository.findById(id);
+    }
+
+    public User findFirstByEmail(String email){
+        return this.userRepository.findFirstByEmail(email);
+    }
+
+    public User findTop1ByEmail(String email){
+        return this.userRepository.findTop1ByEmail(email);
+    }
+
+    // public User updateUser(User user){
+    //     return this.userRepository.updateUser(user);
+    // }
+
+    // public void deleteById(long id){
+    //     this.userRepository.deleteById(id);
+    // }
 }
