@@ -44,11 +44,7 @@ public class UserService {
         return this.userRepository.findTop1ByEmail(email);
     }
 
-    // public User updateUser(User user){
-    //     return this.userRepository.updateUser(user);
-    // }
-
-    // public void deleteById(long id){
-    //     this.userRepository.deleteById(id);
-    // }
+    public void deleteById(long id){
+        this.userRepository.deleteById(id);
+    }
 }

@@ -44,9 +44,9 @@
                               <td>${user.getEmail()}</td>
                               <td>${user.getFullName()}</td>
                               <td>
-                                <button type="button" class="btn btn-success"><a href="/admin/user/informationUser?idUser=user.getId" class="myLink">View</a></button>
-                                <button type="button" class="btn btn-warning"><a href="/admin/user/updateUser?idUser=user.getId" class="myLink">Update</a></button> 
-                                <button type="button" class="btn btn-danger"><a href="/admin/user/deleteUser?idUser=user.getId" class="myLink">Delete</a></button>
+                                <a href="/admin/user/${user.getId()}" class="btn btn-success">View</a>
+                                <a href="/admin/user/update/${user.getId()}" class="btn btn-warning">Update</a>
+                                <a href="/admin/user/delete/${user.getId()}" class="btn btn-danger">Delete</a>
                               </td>
                             </tr>
                         </tbody>

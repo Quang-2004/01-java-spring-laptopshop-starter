@@ -20,7 +20,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findTop1ByEmail(String email);
 
-    // User updateUser(User user);
-
-    // void deleteById(long id);
+    void deleteById(long id);
 }
