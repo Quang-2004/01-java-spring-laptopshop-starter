@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,9 +71,16 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    @RequestMapping(value = "/admin/user/delete/{id}")
-    public String deleteUser(Model model, @PathVariable long id) {
-        this.userService.deleteById(id);
+    @GetMapping(value = "/admin/user/delete/{id}")
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        model.addAttribute("newUser", new User());
+        return "admin/user/delete-user";
+    }
+
+    @PostMapping(value = "/admin/user/delete")
+    public String deleteUserPage(Model model, @ModelAttribute("newUser") User user) {
+        this.userService.deleteById(user.getId());
         return "redirect:/admin/user";
     }
 
