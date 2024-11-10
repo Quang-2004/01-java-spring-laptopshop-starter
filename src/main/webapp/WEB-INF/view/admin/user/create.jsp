@@ -10,9 +10,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Dashboard - Table Users</title>
-        <link href="../css/styles.css" rel="stylesheet" />
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <style>
             .myLink {
@@ -33,30 +31,33 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><a href="/admin">Dashboard</a> / Create User</li>
                         </ol>
-                        <h3>Create a user</h3> <hr>
-                        <form:form action="/admin/user/create" method="POST" modelAttribute="newUser">
-                            <div class="mb-3">
-                                <label class="form-label">Email: </label>
-                                <form:input type="email" class="form-control" path="email"/>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Pass word: </label>
-                                <form:input type="password" class="form-control" path="password"/>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Phone number: </label>
-                                <form:input type="text" class="form-control" path="phoneNumber"/>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Full name: </label>
-                                <form:input type="text" class="form-control" path="fullName"/>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Address: </label>
-                                <form:input type="text" class="form-control" path="address"/>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form:form>
+                        <div class="container col-6">
+                            <h3>Create a user</h3> <hr>
+                            <form:form action="/admin/user/create" method="POST" modelAttribute="newUser">
+                                <div class="mb-3">
+                                    <label class="form-label">Email: </label>
+                                    <form:input type="email" class="form-control" path="email"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Pass word: </label>
+                                    <form:input type="password" class="form-control" path="password"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone number: </label>
+                                    <form:input type="text" class="form-control" path="phoneNumber"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Full name: </label>
+                                    <form:input type="text" class="form-control" path="fullName"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Address: </label>
+                                    <form:input type="text" class="form-control" path="address"/>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form:form>
+                        </div>
+                        
                     </div>
                     
                 </main>
@@ -65,6 +66,6 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../js/scripts.js"></script>
+        <script src="/js/scripts.js"></script>
     </body>
 </html>
