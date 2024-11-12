@@ -104,13 +104,28 @@ public class User {
         this.avatar = avatar;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
-                + ", address=" + address + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + "]";
+                + ", address=" + address + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + ", role=" + role
+                + ", orders=" + orders + "]";
     }
-    
-    
 
     
 }
