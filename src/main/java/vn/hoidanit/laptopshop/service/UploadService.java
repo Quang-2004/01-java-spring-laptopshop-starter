@@ -18,17 +18,23 @@ public class UploadService {
         this.servletContext = servletContext;
     }
 
-    public void handleSaveUploadFile(MultipartFile file, String targetFolder){
+    public String handleSaveUploadFile(MultipartFile file, String targetFolder){
+        String finalName = "";
         try {
             byte[] bytes = file.getBytes();
+            
             String rootPath = this.servletContext.getRealPath("/resources/images");
             File dir = new File(rootPath + File.separator + targetFolder);
+
             if (!dir.exists())
                 dir.mkdirs();
+
             // Create the file on server
             File serverFile = new File(dir.getAbsolutePath() + File.separator +
-                    +System.currentTimeMillis() + "-" + file.getOriginalFilename());
+                    + System.currentTimeMillis() + "-" + file.getOriginalFilename());
                     // uuid in mongodb
+            finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
+
             BufferedOutputStream stream = new BufferedOutputStream(
                     new FileOutputStream(serverFile));
             stream.write(bytes);
@@ -36,5 +42,6 @@ public class UploadService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return finalName;
     }
 }
