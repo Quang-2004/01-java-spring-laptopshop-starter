@@ -46,6 +46,7 @@
                                           <th scope="col">ID</th>
                                           <th scope="col">Email</th>
                                           <th scope="col">Full Name</th>
+                                          <th scope="col">Role</th>
                                           <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -55,6 +56,7 @@
                                               <th scope="row">${user.getId()}</th>
                                               <td>${user.getEmail()}</td>
                                               <td>${user.getFullName()}</td>
+                                              <td>${user.getRole().getName()}</td>
                                               <td>
                                                 <a href="/admin/user/${user.getId()}" class="btn btn-success">View</a>
                                                 <a href="/admin/user/update/${user.getId()}" class="btn btn-warning">Update</a>

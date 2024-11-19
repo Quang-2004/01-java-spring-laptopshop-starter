@@ -44,7 +44,9 @@
                             <li class="list-group-item">Password: ${user.getPassword()}</li>
                             <li class="list-group-item">Phone number: ${user.getPhoneNumber()}</li>
                             <li class="list-group-item">Full name: ${user.getFullName()}</li>
-                            <li class="list-group-item">Address: ${user.getPassword()}</li>
+                            <li class="list-group-item">Address: ${user.getAddress()}</li>
+                            <li class="list-group-item">Role: ${user.getRole().getName()}</li>
+                            <li class="list-group-item">Avatar: <img style="width: 50%; height: auto;" src="/images/avatar/${user.getAvatar()}" alt=""></li>
                         </ul>
                     </div>
                     </div>

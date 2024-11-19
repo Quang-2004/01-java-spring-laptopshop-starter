@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 // import org.springframework.web.bind.annotation.RestController;
 
-import vn.hoidanit.laptopshop.domain.Role;
+
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.RoleService;
 import vn.hoidanit.laptopshop.service.UploadService;
@@ -38,11 +38,11 @@ public class UserController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/")
-    public String getHomePage(Model model){
-        model.addAttribute("quanggggg", "test");      
-        return "hello";
-    }
+    // @GetMapping("/")
+    // public String getHomePage(Model model){
+    //     model.addAttribute("quanggggg", "test");      
+    //     return "hello";
+    // }
 
     @GetMapping("/admin/user")
     public String getUserPage(Model model) {
@@ -70,12 +70,22 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String updateUser(Model model, @ModelAttribute("updateUser") User updateUser) {
+    public String updateUser(Model model, 
+        @ModelAttribute("updateUser") User updateUser,
+        @RequestParam("hoidanitFile") MultipartFile file) {
+
         User currentUser = this.userService.findById(updateUser.getId());
         if(currentUser != null){
+            String avatar = "";
+            if(!file.isEmpty()){
+                avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+            }
+
             currentUser.setAddress(updateUser.getAddress());
             currentUser.setFullName(updateUser.getFullName());
             currentUser.setPhoneNumber(updateUser.getPhoneNumber());
+            currentUser.setAvatar(avatar);
+            currentUser.setRole(this.roleService.findByName(updateUser.getRole().getName()));
             this.userService.handleSaveUser(currentUser);
         }
         
@@ -109,7 +119,11 @@ public class UserController {
         @RequestParam("hoidanitFile") MultipartFile file){
         
         // upload file
-        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        String avatar = "";
+        if(!file.isEmpty()){ // file empty => not create 
+            avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        }
+            
         String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());
 
         hoidanit.setAvatar(avatar);

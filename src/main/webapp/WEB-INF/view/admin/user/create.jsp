@@ -42,7 +42,7 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><a href="/admin">Dashboard</a> / Create User</li>
                         </ol>
-                        <div class="container">
+                        <div class="container col-6">
                             <h3>Create a user</h3> <hr>
                             <form:form action="/admin/user/create" method="POST" modelAttribute="newUser"
                                 enctype="multipart/form-data">
@@ -74,8 +74,8 @@
                                     <div class="mb-3 col-6">
                                         <label class="form-label">Role: </label>
                                         <form:select class="form-select" path="role.name">
-                                            <form:option value="ADMIN">ADMIN</form:option>
                                             <form:option value="USER">USER</form:option>
+                                            <form:option value="ADMIN">ADMIN</form:option>
                                         </form:select>
                                     </div>
                                     <div class="mb-3 col-6">
