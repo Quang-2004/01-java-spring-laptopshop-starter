@@ -28,9 +28,17 @@
                                     class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                                     style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
-                            <a href="#" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
-                            </a>
+                            <div class="dropdown">
+                                <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" > 
+                                    <i class="fas fa-user fa-2x"></i>
+                                </a>
+                                <ul class="dropdown-menu text-small shadow">
+                                    <li><a class="dropdown-item" href="">Tài khoản của tôi</a></li>
+                                    <li><a class="dropdown-item" href="">Đơn mua</a></li>
+                                    <li><a class="dropdown-item" href="">Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                            
                         </div>
                     </div>
                 </nav>
