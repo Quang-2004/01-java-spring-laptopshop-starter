@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,8 @@ import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -115,14 +119,25 @@ public class UserController {
 
     @PostMapping("/admin/user/create")
     public String createUserPage(Model model, 
-        @ModelAttribute("newUser") User hoidanit,                                             
-        @RequestParam("hoidanitFile") MultipartFile file){
+        @ModelAttribute("newUser") @Valid User hoidanit, 
+        BindingResult newUserBindingResult,                                            
+        @RequestParam("hoidanitFile") MultipartFile file
+        ){
+
+        
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors ) {
+            System.out.println (">>>>>>>>>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        // validate
+        if(newUserBindingResult.hasErrors()){
+            return "/admin/user/create";
+        }
         
         // upload file
-        String avatar = "";
-        if(!file.isEmpty()){ // file empty => not create 
-            avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
-        }
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        
             
         String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());
 

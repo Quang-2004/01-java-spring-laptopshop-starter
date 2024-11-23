@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-12 mx-auto">
                                 <div class="d-flex justify-content-between">
-                                    <h2>Table User</h2>
+                                    <h2>Table Users</h2>
                                     <button type="button" class="btn btn-primary"><a href="/admin/user/create" class="myLink">Create a user</a></button> 
                                     
                                 </div>

@@ -12,6 +12,7 @@
         <title>Create User hoidanit</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         <style>
             .myLink {
                 text-decoration: none;
@@ -48,12 +49,25 @@
                                 enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorEmail">
+                                            <form:errors path="email" cssClass="invalid-feedback"/>
+                                        </c:set>
+
                                         <label class="form-label">Email: </label>
-                                        <form:input type="email" class="form-control" path="email"/>
+                                        <form:input type="email" 
+                                            class="form-control ${not empty errorEmail ? 'is-invalid' : ''}" 
+                                            path="email"/>
+                                        ${errorEmail}
                                     </div>
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorPassword">
+                                            <form:errors class="invalid-feedback" path="password" />
+                                        </c:set>
+
                                         <label class="form-label">Pass word: </label>
-                                        <form:input type="password" class="form-control" path="password"/>
+                                        <form:input type="password" 
+                                            class="form-control ${not empty errorPassword ? 'is-invalid' : ''}" path="password"/>
+                                        ${errorPassword}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -62,8 +76,14 @@
                                         <form:input type="text" class="form-control" path="phoneNumber"/>
                                     </div>
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorFullname">
+                                            <form:errors cssClass="invalid-feedback" path="fullName" />
+                                        </c:set>
+
                                         <label class="form-label">Full name: </label>
-                                        <form:input type="text" class="form-control" path="fullName"/>
+                                        <form:input type="text" 
+                                            class="form-control ${not empty errorFullname ? 'is-invalid' : ''}" path="fullName"/>
+                                        ${errorFullname}
                                     </div>
                                 </div>
                                 <div class="mb-3">

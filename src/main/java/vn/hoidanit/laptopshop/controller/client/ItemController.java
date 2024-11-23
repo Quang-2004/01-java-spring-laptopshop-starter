@@ -10,15 +10,15 @@ import vn.hoidanit.laptopshop.service.ProductService;
 
 
 @Controller
-public class ProductsController {
+public class ItemController {
 
     private final ProductService productService;
     
-    public ProductsController(ProductService productService) {
+    public ItemController(ProductService productService) {
         this.productService = productService;
     }
 
-    @GetMapping("/product/detail/{id}")
+    @GetMapping("/product/{id}")
     public String getDetailProduct(Model model, @PathVariable long id) {
         Product product = this.productService.findById(id);
         
