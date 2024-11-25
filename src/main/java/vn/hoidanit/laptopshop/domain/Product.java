@@ -17,25 +17,34 @@ public class Product {
     private long id;
 
     @NotNull
-    @Size(min = 2, message = "Tên phải dài hơn 2 ký tự!")
+    @Size(min = 2, message = "Name phải dài hơn 2 ký tự!")
     private String name;
 
     @NotNull(message = "Vui lòng nhập giá sản phẩm!")
+    @Min(value = 1, message = "Price phải lớn hơn 0!")
     private double price;
 
-    @NotNull(message = "Ảnh sản phẩm không được trống!")
+    
     private String image;
 
+    @NotNull
+    @Size(min = 1, message = "DetailDesc không được để trống!")
     private String detailDesc;
+
+    @NotNull
+    @Size(min = 1, message = "ShortDetail không được để trống!")
     private String shortDesc;
 
-    @NotNull(message = "Vui lòng nhập số lượng sản phẩm!")
+    @NotNull()
+    @Min(value = 1, message = "Quantity phải lớn hơn 0!")
     private long quantity;
-    
+
     private long sold;
 
-    @NotNull(message = "Vui lòng nhập hãng!")
+    @NotNull()
+    @Size(min = 1, message = "Vui lòng chọn hãng!")
     private String factory;
+
     private String target;
 
 

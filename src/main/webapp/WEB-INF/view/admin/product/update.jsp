@@ -43,17 +43,27 @@
                             <li class="breadcrumb-item active"><a href="/admin">Dashboard</a> / Products</li>
                         </ol>
                         <div class="container col-6">
-                            <h3>Create a product</h3> <hr>
+                            <h3>Update a product</h3> <hr>
                             <form:form action="/admin/product/update" method="POST" modelAttribute="newProduct"
                                 enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorName">
+                                            <form:errors cssClass="invalid-feedback" path="name" />
+                                        </c:set>
                                         <label class="form-label">Name: </label>
-                                        <form:input type="text" class="form-control" path="name"/>
+                                        <form:input type="text" 
+                                            class="form-control ${not empty errorName ? 'is-invalid': ''}" path="name"/>
+                                            ${errorName}
                                     </div>
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorPrice">
+                                            <form:errors cssClass="invalid-feedback" path="price" />
+                                        </c:set>
                                         <label class="form-label">Price: </label>
-                                        <form:input type="number" class="form-control" path="price"/>
+                                        <form:input type="number" 
+                                            class="form-control ${not empty errorPrice ? 'is-invalid' : ''}" path="price"/>
+                                        ${errorPrice}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -68,15 +78,24 @@
                                         <form:input type="text" class="form-control" path="shortDesc"/>
                                     </div>
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorQuantity">
+                                            <form:errors cssClass="invalid-feedback" path="quantity" />
+                                        </c:set>
                                         <label class="form-label">Quantity: </label>
-                                        <form:input type="number" class="form-control" path="quantity"/>
+                                        <form:input type="number" 
+                                            class="form-control ${not empty errorQuantity ? 'is-invalid' : ''}" path="quantity"/>
+                                        ${errorQuantity}
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorFactory">
+                                            <form:errors cssClass="invalid-feedback" path="factory" />
+                                        </c:set>
                                         <label class="form-label">Factory: </label>
-                                        <form:select class="form-select" path="factory">
+                                        <form:select class="form-select ${not empty errorFactory ? 'is-invalid' : ''}" path="factory">
+                                            <option></option>
                                             <form:option value="APPLE">Apple (MacBook)</form:option>
                                             <form:option value="ASUS">Asus</form:option>
                                             <form:option value="LEVONO">Lenovo</form:option>
@@ -90,10 +109,12 @@
                                             <form:option value="HUAWEI">Huawei</form:option>
                                             <form:option value="HP">HP</form:option>
                                         </form:select>
+                                        ${errorFactory}
                                     </div>
                                     <div class="mb-3 col-6">
                                         <label class="form-label">Target: </label>
                                         <form:select class="form-select" path="target">
+                                            <option></option>
                                             <form:option value="GAMMING">Gamming</form:option>
                                             <form:option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng</form:option>
                                             <form:option value="THIET-KE-DO-HOA">Thiết kế đồ họa</form:option>
@@ -106,8 +127,10 @@
                                 <div class="row">
                                     <div class="mb-3 col-6">
                                         <label for="image" class="form-label">Image: </label>
-                                        <input type="file" class="form-control" id="image" name="imageFile" 
-                                            accept=".png, .jpg, .jpeg"/>	
+                                        <input type="file" 
+                                            class="form-control" id="image" name="imageFile" 
+                                            accept=".png, .jpg, .jpeg"/>
+                                        	
                                     </div>
                                 </div>
                                 <div class="row">
@@ -118,7 +141,7 @@
                                 </div>
                                 <div class="row">
                                     <label class="form-label"></label>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
                             </form:form>
                         </div>

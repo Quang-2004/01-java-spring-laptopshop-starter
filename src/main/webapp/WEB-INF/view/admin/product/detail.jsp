@@ -48,7 +48,7 @@
                             <li class="list-group-item">Short description: ${product.getShortDesc()}</li>
                             <li class="list-group-item">Factory: ${product.getFactory()}</li>
                             <li class="list-group-item">Target: ${product.getTarget()}</li>
-                            <li class="list-group-item">Image: <img style="width: 50%; height: auto;" src="/client/img/${product.getImage()}" alt=""></li>
+                            <li class="list-group-item">Image: <img style="width: 50%; height: auto;" src="/images/product/${product.getImage()}" alt=""></li>
                         </ul>
                     </div>
                     </div>

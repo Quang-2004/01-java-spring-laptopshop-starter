@@ -48,7 +48,7 @@
                                 enctype="multipart/form-data">
                                 <div class="mb-3" style="display: none;">
                                     <label class="form-label">Id: </label>
-                                    <form:input type="text" class="form-control" path="Id"/>
+                                    <form:input type="text" class="form-control" path="id"/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Email: </label>
@@ -59,8 +59,14 @@
                                     <form:input type="text" class="form-control" path="phoneNumber"/>
                                 </div>
                                 <div class="mb-3">
+                                    <c:set var="errorFullname">
+                                        <form:errors cssClass="invalid-feedback" path="fullName" />
+                                    </c:set>
+
                                     <label class="form-label">Full name: </label>
-                                    <form:input type="text" class="form-control" path="fullName"/>
+                                    <form:input type="text" 
+                                        class="form-control ${not empty errorFullname ? 'is-invalid' : ''}" path="fullName"/>
+                                    ${errorFullname}
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Address: </label>

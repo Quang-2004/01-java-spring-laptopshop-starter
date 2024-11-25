@@ -42,35 +42,62 @@
                                 enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorName">
+                                            <form:errors cssClass="invalid-feedback" path="name" />
+                                        </c:set>
                                         <label class="form-label">Name: </label>
-                                        <form:input type="text" class="form-control" path="name"/>
+                                        <form:input type="text" 
+                                            class="form-control ${not empty errorName ? 'is-invalid': ''}" path="name"/>
+                                            ${errorName}
                                     </div>
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorPrice">
+                                            <form:errors cssClass="invalid-feedback" path="price" />
+                                        </c:set>
                                         <label class="form-label">Price: </label>
-                                        <form:input type="number" class="form-control" path="price"/>
+                                        <form:input type="number" 
+                                            class="form-control ${not empty errorPrice ? 'is-invalid' : ''}" path="price"/>
+                                        ${errorPrice}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3">
+                                        <c:set var="errorDetailDesc">
+                                            <form:errors cssClass="invalid-feedback" path="detailDesc" />
+                                        </c:set>
                                         <label class="form-label">Detail description: </label>
-                                        <form:textarea class="form-control" path="detailDesc"/>
+                                        <form:textarea class="form-control ${not empty errorDetailDesc ? 'is-invalid' : ''}" path="detailDesc"/>
+                                        ${errorDetailDesc}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorShortDesc">
+                                            <form:errors cssClass="invalid-feedback" path="shortDesc" />
+                                        </c:set>
                                         <label class="form-label">Short description: </label>
-                                        <form:input type="text" class="form-control" path="shortDesc"/>
+                                        <form:input type="text" class="form-control  ${not empty errorShortDesc ? 'is-invalid' : ''}" path="shortDesc"/>
+                                        ${errorShortDesc}
                                     </div>
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorQuantity">
+                                            <form:errors cssClass="invalid-feedback" path="quantity" />
+                                        </c:set>
                                         <label class="form-label">Quantity: </label>
-                                        <form:input type="number" class="form-control" path="quantity"/>
+                                        <form:input type="number" 
+                                            class="form-control ${not empty errorQuantity ? 'is-invalid' : ''}" path="quantity"/>
+                                        ${errorQuantity}
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="mb-3 col-6">
+                                        <c:set var="errorFactory">
+                                            <form:errors cssClass="invalid-feedback" path="factory" />
+                                        </c:set>
                                         <label class="form-label">Factory: </label>
-                                        <form:select class="form-select" path="factory">
+                                        <form:select class="form-select ${not empty errorFactory ? 'is-invalid' : ''}" path="factory">
+                                            <option></option>
                                             <form:option value="APPLE">Apple (MacBook)</form:option>
                                             <form:option value="ASUS">Asus</form:option>
                                             <form:option value="LEVONO">Lenovo</form:option>
@@ -84,10 +111,12 @@
                                             <form:option value="HUAWEI">Huawei</form:option>
                                             <form:option value="HP">HP</form:option>
                                         </form:select>
+                                        ${errorFactory}
                                     </div>
                                     <div class="mb-3 col-6">
                                         <label class="form-label">Target: </label>
                                         <form:select class="form-select" path="target">
+                                            <option></option>
                                             <form:option value="GAMMING">Gamming</form:option>
                                             <form:option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng</form:option>
                                             <form:option value="THIET-KE-DO-HOA">Thiết kế đồ họa</form:option>
@@ -100,8 +129,10 @@
                                 <div class="row">
                                     <div class="mb-3 col-6">
                                         <label for="image" class="form-label">Image: </label>
-                                        <input type="file" class="form-control" id="image" name="imageFile" 
-                                            accept=".png, .jpg, .jpeg"/>	
+                                        <input type="file" 
+                                            class="form-control" id="image" name="imageFile" 
+                                            accept=".png, .jpg, .jpeg"/>
+                                        	
                                     </div>
                                 </div>
                                 <div class="row">

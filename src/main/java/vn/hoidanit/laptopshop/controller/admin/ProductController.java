@@ -22,9 +22,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-
-
-
 @Controller
 public class ProductController {
 
@@ -76,6 +73,12 @@ public class ProductController {
         if(newProductBindingResult.hasErrors()){
             return "/admin/product/create";
         }
+
+        if(newProduct != null){
+            String image = this.uploadService.handleSaveUploadFile(file, "product");
+            newProduct.setImage(image);
+            this.productService.handleSaveProduct(newProduct);
+        }
         return "redirect:/admin/product";
     }
 
@@ -90,18 +93,39 @@ public class ProductController {
 
     @PostMapping("/admin/product/update")
     public String updateProductPage(Model model, 
-        @ModelAttribute("newProduct") Product newProduct,
+        @ModelAttribute("updateProduct") @Valid Product updateProduct,
+        BindingResult newProductBindingResult,
         @RequestParam("imageFile") MultipartFile file) {
         
+        List<FieldError> errors = newProductBindingResult.getFieldErrors();
+        for (FieldError error : errors ) {
+            System.out.println (">>>>>>>>>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        // validate
+        if(newProductBindingResult.hasErrors()){
+            return "/admin/product/update";
+        }
         
+        Product currentProduct = this.productService.findById(updateProduct.getId());
+        if(currentProduct != null){
+            
+            String image = this.uploadService.handleSaveUploadFile(file, "product");
 
-        // if(newProduct != null){
-        //     Product currentProduct = this.productService.findById(newProduct.getId());
+            // update
+            currentProduct.setName(updateProduct.getName());;
+            currentProduct.setPrice(updateProduct.getPrice());
+            currentProduct.setDetailDesc(updateProduct.getDetailDesc());
+            currentProduct.setShortDesc(updateProduct.getShortDesc());
+            currentProduct.setQuantity(updateProduct.getQuantity());
+            currentProduct.setFactory(updateProduct.getFactory());
+            currentProduct.setTarget(updateProduct.getTarget());
+            currentProduct.setImage(image);
 
-        //     if(!file.isEmpty()){
-        //         String img = this.uploadService.handleSaveUploadFile(file, "");
-        //     }
-        // }
+            // save product
+            this.productService.handleSaveProduct(currentProduct);
+            
+        }
         
         return "redirect:/admin/product";
     }
@@ -113,9 +137,9 @@ public class ProductController {
         return "admin/product/delete";
     }
 
-    @GetMapping("/admin/product/delete")
-    public String deleteProductPage(Model model, @PathVariable long id) {
-        this.productService.deleteById(id);
+    @PostMapping("/admin/product/delete")
+    public String deleteProductPage(Model model, @ModelAttribute("newProduct") Product newProduct) {
+        this.productService.deleteById(newProduct.getId());
         return "redirect:/admin/product";
     }
     
