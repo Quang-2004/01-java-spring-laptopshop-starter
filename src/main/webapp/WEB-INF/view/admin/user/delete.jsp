@@ -30,7 +30,10 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Manage Users</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="/admin">Dashboard</a> / Users</li>
+                            <li class="breadcrumb-item active">
+                                <a href="/admin">Dashboard</a> / 
+                                <a href="/admin/user">User</a> /
+                                Delete </li>
                         </ol>
                         <h3>Delete the user with ID = ${id}</h3> <hr>
                         <div class="alert alert-danger" role="alert">

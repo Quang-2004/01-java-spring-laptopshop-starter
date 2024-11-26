@@ -30,27 +30,31 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Manage Products</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="/admin">Dashboard</a> / Products</li>
-                        </ol>
+                            <li class="breadcrumb-item active">
+                                <a href="/admin">Dashboard</a> / 
+                                <a href="/admin/product">Products</a> /
+                                Detail </li>                        </ol>
                         <h3>Product detail</h3>
-                    <hr>
-                    <div class="card" style="width: 60%;">
-                        <div class="card-header">
-                            Infomation of product
+                        <hr>
+                        <div class="card" style="width: 60%;">
+                            <div class="card-header">
+                                Infomation of product
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Id: ${product.getId()}</li>
+                                <li class="list-group-item">Name: ${product.getName()}</li>
+                                <li class="list-group-item">Price: ${product.getPrice()}</li>
+                                <li class="list-group-item">Quantity: ${product.getQuantity()}</li>
+                                <li class="list-group-item">Sold: ${product.getSold()}</li>
+                                <li class="list-group-item">Detail description: ${product.getDetailDesc()}</li>
+                                <li class="list-group-item">Short description: ${product.getShortDesc()}</li>
+                                <li class="list-group-item">Factory: ${product.getFactory()}</li>
+                                <li class="list-group-item">Target: ${product.getTarget()}</li>
+                                <li class="list-group-item">Image: <img style="width: 50%; height: auto;" src="/images/product/${product.getImage()}" alt=""></li>
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Id: ${product.getId()}</li>
-                            <li class="list-group-item">Name: ${product.getName()}</li>
-                            <li class="list-group-item">Price: ${product.getPrice()}</li>
-                            <li class="list-group-item">Quantity: ${product.getQuantity()}</li>
-                            <li class="list-group-item">Sold: ${product.getSold()}</li>
-                            <li class="list-group-item">Detail description: ${product.getDetailDesc()}</li>
-                            <li class="list-group-item">Short description: ${product.getShortDesc()}</li>
-                            <li class="list-group-item">Factory: ${product.getFactory()}</li>
-                            <li class="list-group-item">Target: ${product.getTarget()}</li>
-                            <li class="list-group-item">Image: <img style="width: 50%; height: auto;" src="/images/product/${product.getImage()}" alt=""></li>
-                        </ul>
-                    </div>
+                        <br>
+                        <button type="button" class="btn btn-success"><a class="myLink" href="/admin/product">Back</a></button>
                     </div>
                     
                 </main>

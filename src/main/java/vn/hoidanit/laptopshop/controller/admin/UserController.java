@@ -86,7 +86,7 @@ public class UserController {
 
         // validate
         if(newUserBindingResult.hasErrors()){
-            return "/admin/user/update";
+            return "admin/user/update";
         }
 
         User currentUser = this.userService.findById(updateUser.getId());
@@ -143,7 +143,7 @@ public class UserController {
 
         // validate
         if(newUserBindingResult.hasErrors()){
-            return "/admin/user/create";
+            return "admin/user/create";
         }
         
         // upload file

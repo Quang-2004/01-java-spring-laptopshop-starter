@@ -40,20 +40,36 @@
                             <h3>Create a product</h3> <hr>
                             <form:form action="/admin/product/create" method="POST" modelAttribute="newProduct"
                                 enctype="multipart/form-data">
+
+                                <c:set var="errorName">
+                                    <form:errors cssClass="invalid-feedback" path="name" />
+                                </c:set>
+                                <c:set var="errorPrice">
+                                    <form:errors cssClass="invalid-feedback" path="price" />
+                                </c:set>
+                                <c:set var="errorDetailDesc">
+                                    <form:errors cssClass="invalid-feedback" path="detailDesc" />
+                                </c:set>
+                                <c:set var="errorShortDesc">
+                                    <form:errors cssClass="invalid-feedback" path="shortDesc" />
+                                </c:set>
+                                <c:set var="errorQuantity">
+                                    <form:errors cssClass="invalid-feedback" path="quantity" />
+                                </c:set>
+                                <c:set var="errorFactory">
+                                    <form:errors cssClass="invalid-feedback" path="factory" />
+                                </c:set>
+
+                                <input:form type="hidden" path="id"/>
                                 <div class="row">
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorName">
-                                            <form:errors cssClass="invalid-feedback" path="name" />
-                                        </c:set>
                                         <label class="form-label">Name: </label>
                                         <form:input type="text" 
                                             class="form-control ${not empty errorName ? 'is-invalid': ''}" path="name"/>
                                             ${errorName}
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorPrice">
-                                            <form:errors cssClass="invalid-feedback" path="price" />
-                                        </c:set>
+                                        
                                         <label class="form-label">Price: </label>
                                         <form:input type="number" 
                                             class="form-control ${not empty errorPrice ? 'is-invalid' : ''}" path="price"/>
@@ -62,9 +78,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="mb-3">
-                                        <c:set var="errorDetailDesc">
-                                            <form:errors cssClass="invalid-feedback" path="detailDesc" />
-                                        </c:set>
                                         <label class="form-label">Detail description: </label>
                                         <form:textarea class="form-control ${not empty errorDetailDesc ? 'is-invalid' : ''}" path="detailDesc"/>
                                         ${errorDetailDesc}
@@ -72,17 +85,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorShortDesc">
-                                            <form:errors cssClass="invalid-feedback" path="shortDesc" />
-                                        </c:set>
                                         <label class="form-label">Short description: </label>
                                         <form:input type="text" class="form-control  ${not empty errorShortDesc ? 'is-invalid' : ''}" path="shortDesc"/>
                                         ${errorShortDesc}
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorQuantity">
-                                            <form:errors cssClass="invalid-feedback" path="quantity" />
-                                        </c:set>
                                         <label class="form-label">Quantity: </label>
                                         <form:input type="number" 
                                             class="form-control ${not empty errorQuantity ? 'is-invalid' : ''}" path="quantity"/>
@@ -92,9 +99,6 @@
                                 
                                 <div class="row">
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorFactory">
-                                            <form:errors cssClass="invalid-feedback" path="factory" />
-                                        </c:set>
                                         <label class="form-label">Factory: </label>
                                         <form:select class="form-select ${not empty errorFactory ? 'is-invalid' : ''}" path="factory">
                                             <option></option>
@@ -132,7 +136,6 @@
                                         <input type="file" 
                                             class="form-control" id="image" name="imageFile" 
                                             accept=".png, .jpg, .jpeg"/>
-                                        	
                                     </div>
                                 </div>
                                 <div class="row">

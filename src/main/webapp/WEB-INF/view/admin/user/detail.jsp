@@ -30,25 +30,31 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Manage Users</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="/admin">Dashboard</a> / Users</li>
+                            <li class="breadcrumb-item active">
+                                <a href="/admin">Dashboard</a> / 
+                                <a href="/admin/user">User</a> /
+                                Detail </li>
                         </ol>
                         <h3>User detail</h3>
-                    <hr>
-                    <div class="card" style="width: 60%;">
-                        <div class="card-header">
-                            Infomation of user
+                        <hr>
+                        <div class="card" style="width: 60%;">
+                            <div class="card-header">
+                                Infomation of user
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Id: ${user.getId()}</li>
+                                <li class="list-group-item">Email: ${user.getEmail()}</li>
+                                <li class="list-group-item">Password: ${user.getPassword()}</li>
+                                <li class="list-group-item">Phone number: ${user.getPhoneNumber()}</li>
+                                <li class="list-group-item">Full name: ${user.getFullName()}</li>
+                                <li class="list-group-item">Address: ${user.getAddress()}</li>
+                                <li class="list-group-item">Role: ${user.getRole().getName()}</li>
+                                <li class="list-group-item">Avatar: <img style="width: 50%; height: auto;" src="/images/avatar/${user.getAvatar()}" alt=""></li>
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Id: ${user.getId()}</li>
-                            <li class="list-group-item">Email: ${user.getEmail()}</li>
-                            <li class="list-group-item">Password: ${user.getPassword()}</li>
-                            <li class="list-group-item">Phone number: ${user.getPhoneNumber()}</li>
-                            <li class="list-group-item">Full name: ${user.getFullName()}</li>
-                            <li class="list-group-item">Address: ${user.getAddress()}</li>
-                            <li class="list-group-item">Role: ${user.getRole().getName()}</li>
-                            <li class="list-group-item">Avatar: <img style="width: 50%; height: auto;" src="/images/avatar/${user.getAvatar()}" alt=""></li>
-                        </ul>
-                    </div>
+
+                        <br>
+                        <button type="button" class="btn btn-success"><a class="myLink" href="/admin/user">Back</a></button>
                     </div>
                     
                 </main>

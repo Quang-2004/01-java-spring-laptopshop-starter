@@ -29,6 +29,7 @@
                 });
             });
         </script>
+        
     </head>
     <body class="sb-nav-fixed">
         <!-- HEADER -->
@@ -40,26 +41,43 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Manage Products</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="/admin">Dashboard</a> / Products</li>
-                        </ol>
+                            <li class="breadcrumb-item active">
+                                <a href="/admin">Dashboard</a> / 
+                                <a href="/admin/product">Products</a> /
+                                Update </li>                        </ol>
                         <div class="container col-6">
                             <h3>Update a product</h3> <hr>
                             <form:form action="/admin/product/update" method="POST" modelAttribute="newProduct"
                                 enctype="multipart/form-data">
+
+                                <c:set var="errorName">
+                                    <form:errors cssClass="invalid-feedback" path="name" />
+                                </c:set>
+                                <c:set var="errorPrice">
+                                    <form:errors cssClass="invalid-feedback" path="price" />
+                                </c:set>
+                                <c:set var="errorShortDesc">
+                                    <form:errors cssClass="invalid-feedback" path="shortDesc" />
+                                </c:set>
+                                <c:set var="errorDetailDesc">
+                                    <form:errors cssClass="invalid-feedback" path="detailDesc" />
+                                </c:set>
+                                <c:set var="errorQuantity">
+                                    <form:errors cssClass="invalid-feedback" path="quantity" />
+                                </c:set>
+                                <c:set var="errorFactory">
+                                    <form:errors cssClass="invalid-feedback" path="factory" />
+                                </c:set>
+
+                                <form:input type="hidden" path="id"/>
                                 <div class="row">
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorName">
-                                            <form:errors cssClass="invalid-feedback" path="name" />
-                                        </c:set>
                                         <label class="form-label">Name: </label>
                                         <form:input type="text" 
                                             class="form-control ${not empty errorName ? 'is-invalid': ''}" path="name"/>
                                             ${errorName}
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorPrice">
-                                            <form:errors cssClass="invalid-feedback" path="price" />
-                                        </c:set>
                                         <label class="form-label">Price: </label>
                                         <form:input type="number" 
                                             class="form-control ${not empty errorPrice ? 'is-invalid' : ''}" path="price"/>
@@ -69,18 +87,18 @@
                                 <div class="row">
                                     <div class="mb-3">
                                         <label class="form-label">Detail description: </label>
-                                        <form:textarea class="form-control" path="detailDesc"/>
+                                        <form:textarea class="form-control ${not empty errorDetailDesc ? 'is-invalid' : ''}" path="detailDesc"/>
+                                        ${detailDesc}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-6">
                                         <label class="form-label">Short description: </label>
-                                        <form:input type="text" class="form-control" path="shortDesc"/>
+                                        <form:input type="text" class="form-control ${not empty errorShortDesc ? 'is-invalid' : ''}" path="shortDesc"/>
+                                        ${errorShortDesc}
                                     </div>
+                                    
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorQuantity">
-                                            <form:errors cssClass="invalid-feedback" path="quantity" />
-                                        </c:set>
                                         <label class="form-label">Quantity: </label>
                                         <form:input type="number" 
                                             class="form-control ${not empty errorQuantity ? 'is-invalid' : ''}" path="quantity"/>
@@ -90,9 +108,6 @@
                                 
                                 <div class="row">
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorFactory">
-                                            <form:errors cssClass="invalid-feedback" path="factory" />
-                                        </c:set>
                                         <label class="form-label">Factory: </label>
                                         <form:select class="form-select ${not empty errorFactory ? 'is-invalid' : ''}" path="factory">
                                             <option></option>
@@ -130,18 +145,22 @@
                                         <input type="file" 
                                             class="form-control" id="image" name="imageFile" 
                                             accept=".png, .jpg, .jpeg"/>
-                                        	
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <img style="max-height: 250px; display: none;" alt="product preview"
-                                            id="productPreview">
+                                        <c:if test="${not empty newProduct.image}">
+                                            <img id="productPreview" style="max-height: 250px;" 
+                                            src="/images/product/${newProduct.image}" 
+                                             alt="Product Image">
+                                        </c:if>
+                                        
                                     </div>
                                 </div>
+                                
                                 <div class="row">
                                     <label class="form-label"></label>
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-warning">Update</button>
                                 </div>
                             </form:form>
                         </div>

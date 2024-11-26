@@ -47,12 +47,19 @@
                             <h3>Create a user</h3> <hr>
                             <form:form action="/admin/user/create" method="POST" modelAttribute="newUser"
                                 enctype="multipart/form-data">
+                                <c:set var="errorEmail">
+                                    <form:errors path="email" cssClass="invalid-feedback"/>
+                                </c:set>
+                                <c:set var="errorPassword">
+                                    <form:errors class="invalid-feedback" path="password" />
+                                </c:set>
+                                <c:set var="errorFullname">
+                                    <form:errors cssClass="invalid-feedback" path="fullName" />
+                                </c:set>
+
+                                <input:form type="hidden" path="id"/>
                                 <div class="row">
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorEmail">
-                                            <form:errors path="email" cssClass="invalid-feedback"/>
-                                        </c:set>
-
                                         <label class="form-label">Email: </label>
                                         <form:input type="email" 
                                             class="form-control ${not empty errorEmail ? 'is-invalid' : ''}" 
@@ -60,10 +67,6 @@
                                         ${errorEmail}
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorPassword">
-                                            <form:errors class="invalid-feedback" path="password" />
-                                        </c:set>
-
                                         <label class="form-label">Pass word: </label>
                                         <form:input type="password" 
                                             class="form-control ${not empty errorPassword ? 'is-invalid' : ''}" path="password"/>
@@ -76,10 +79,6 @@
                                         <form:input type="text" class="form-control" path="phoneNumber"/>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <c:set var="errorFullname">
-                                            <form:errors cssClass="invalid-feedback" path="fullName" />
-                                        </c:set>
-
                                         <label class="form-label">Full name: </label>
                                         <form:input type="text" 
                                             class="form-control ${not empty errorFullname ? 'is-invalid' : ''}" path="fullName"/>

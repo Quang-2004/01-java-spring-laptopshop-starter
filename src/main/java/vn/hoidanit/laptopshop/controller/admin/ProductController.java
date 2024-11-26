@@ -71,14 +71,14 @@ public class ProductController {
 
         // validate
         if(newProductBindingResult.hasErrors()){
-            return "/admin/product/create";
+            return "admin/product/create";
         }
 
-        if(newProduct != null){
-            String image = this.uploadService.handleSaveUploadFile(file, "product");
-            newProduct.setImage(image);
-            this.productService.handleSaveProduct(newProduct);
-        }
+        
+        String image = this.uploadService.handleSaveUploadFile(file, "product");
+        newProduct.setImage(image);
+        this.productService.handleSaveProduct(newProduct);
+        
         return "redirect:/admin/product";
     }
 
@@ -93,7 +93,7 @@ public class ProductController {
 
     @PostMapping("/admin/product/update")
     public String updateProductPage(Model model, 
-        @ModelAttribute("updateProduct") @Valid Product updateProduct,
+        @ModelAttribute("newProduct") @Valid Product updateProduct,
         BindingResult newProductBindingResult,
         @RequestParam("imageFile") MultipartFile file) {
         
@@ -104,13 +104,15 @@ public class ProductController {
 
         // validate
         if(newProductBindingResult.hasErrors()){
-            return "/admin/product/update";
+            model.addAttribute("updateProduct", updateProduct);
+            return "admin/product/update";
         }
         
         Product currentProduct = this.productService.findById(updateProduct.getId());
         if(currentProduct != null){
             
             String image = this.uploadService.handleSaveUploadFile(file, "product");
+            if(image != "") currentProduct.setImage(image);
 
             // update
             currentProduct.setName(updateProduct.getName());;
@@ -120,7 +122,7 @@ public class ProductController {
             currentProduct.setQuantity(updateProduct.getQuantity());
             currentProduct.setFactory(updateProduct.getFactory());
             currentProduct.setTarget(updateProduct.getTarget());
-            currentProduct.setImage(image);
+            
 
             // save product
             this.productService.handleSaveProduct(currentProduct);
