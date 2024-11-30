@@ -1,0 +1,145 @@
+/* Cài đặt cơ bản */
+body {
+    margin: 0;
+    font-family: "Arial", sans-serif;
+    background: linear-gradient(135deg, #8e44ad, #3498db);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    animation: gradientBG 6s infinite alternate;
+    color: #fff;
+}
+
+/* Hiệu ứng nền chuyển động */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+body.auth {
+    background-size: 200% 200%;
+}
+
+/* Container chính */
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transform: translateY(-20px);
+    animation: fadeIn 1.5s ease-out forwards;
+}
+
+/* Hộp nội dung */
+.auth-box {
+    padding: 30px;
+    text-align: center;
+    margin-right: 30px;
+}
+
+.auth-box h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #f1f1f1;
+}
+
+/* Input */
+.auth-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    background: rgba(255, 255, 255, 0.7);
+    outline: none;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-box input:focus {
+    background: #fff;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
+}
+
+/* Button */
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.auth-box button:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Link chuyển đổi */
+.auth-box .switch {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #f1f1f1;
+}
+
+.auth-box .switch a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.auth-box .switch a:hover {
+    color: #ffce00;
+}
+
+/* Hiệu ứng Animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hiệu ứng chuyển đổi */
+.transition-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.transition-link::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: white;
+    transition: width 0.3s;
+}
+
+.transition-link:hover::after {
+    width: 100%;
+}

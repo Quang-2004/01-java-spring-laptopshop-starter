@@ -44,7 +44,9 @@
                             <li class="breadcrumb-item active">
                                 <a href="/admin">Dashboard</a> / 
                                 <a href="/admin/product">Products</a> /
-                                Update </li>                        </ol>
+                                Update
+                            </li>                        
+                        </ol>
                         <div class="container col-6">
                             <h3>Update a product</h3> <hr>
                             <form:form action="/admin/product/update" method="POST" modelAttribute="newProduct"
