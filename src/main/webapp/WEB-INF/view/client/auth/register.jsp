@@ -15,8 +15,9 @@
         <div class="auth-box">
             <h2>Create Your Account!</h2>
             <p class="subtitle">Sign up to get started with us.</p>
-            <form:form method="POST" action="/register" modelAttribute="registerUser">
+            <form:form action="/register" method="POST" modelAttribute="registerUser">
 
+               
                 <c:set var="errorEmail">
                     <form:errors cssClass="invalid-feedback" path="email" />
                 </c:set>
@@ -27,24 +28,51 @@
                     <form:errors cssClass="invalid-feedback" path="confirmPassword" />
                 </c:set>
 
-                <form:input path="firstName" placeholder="First Name" cssClass="form-control" required="true" />
+                <div class="form-row">
+                    <!-- First Name and Last Name -->
+                    <div class="form-floating">
+                        <c:set var="errorFirstName">
+                            <form:errors cssClass="invalid-feedback" path="firstName" />
+                        </c:set>
 
+                        <form:input type="text" class="form-control ${not empty errorFirstName ? 'is-invalid' : ''}" 
+                            path="firstName" />
+                        <label for="firstName">First name</label>
+                        ${errorFirstName}
 
-                <form:input path="lastName" placeholder="Last Name" cssClass="form-control" required="true" />
+                    </div>
+                    <div class="form-floating">
+                        <form:input type="text" class="form-control" 
+                            path="lastName" />
+                        <label for="lastName">Last name</label>
+                    </div>
+                </div>
 
+                <!-- Email Address -->
+                <div class="form-floating">
+                    <form:input type="email" class="form-control ${not empty errorEmail ? 'is-invalid' : ''}" 
+                        path="email" />
+                    <label for="email">Email address</label>
+                    ${errorEmail}
+                </div>
 
-                <form:input path="email" placeholder="Email" 
-                    cssClass="form-control ${not empty errorEmail ? 'is-invalid' : ''}" required="true" />
-                ${errorEmail}
+                <!-- Password and Confirm Password -->
+                <div class="form-row">
+                    <div class="form-floating">
+                        <form:input type="password" class="form-control ${not empty errorPassword ? 'is-invalid' : ''}" 
+                            path="password" />
+                        <label for="password">Password</label>
+                        ${errorPassword}
+                    </div>
 
-                <form:input path="password" placeholder="Password" 
-                    cssClass="form-control  ${not empty errorPassword ? 'is-invalid' : ''}" type="password" required="true" />
-                ${errorPassword}
-                
-                <form:input path="confirmPassword" placeholder="Confirm Password" 
-                    cssClass="form-control ${not empty errorConFirmPassword ? 'is-invalid' : ''}" type="password" required="true" />
-                ${errorConFirmPassword}
-                
+                    <div class="form-floating">
+                        <form:input type="password" class="form-control ${not empty errorConFirmPassword ? 'is-invalid' : ''}"  
+                            path="confirmPassword" />
+                        <label for="confirmPassword">Confirm Password</label>
+                        ${errorConFirmPassword}
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary mt-3">Sign Up</button>
             </form:form>
             <p class="switch mt-3">

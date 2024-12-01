@@ -1,5 +1,7 @@
 package vn.hoidanit.laptopshop.service.validator;
 
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Service;
 
 import jakarta.validation.ConstraintValidator;
@@ -20,17 +22,23 @@ public class RegisterValidator implements ConstraintValidator<RegisterChecked, R
     public boolean isValid(RegisterDTO user, ConstraintValidatorContext context) {
         boolean valid = true;
 
+        // Check if first fields match
+        if (user.getFirstName().length() < 3) {
+            addConstraintViolation(context, "First must have at least 3 characters!", "firstName");
+            valid = false;
+        }
+
         // Check if email fields match
         if (this.userService.checkEmailExist(user.getEmail())) {
             addConstraintViolation(context, "Email already exists!", "email");
             valid = false;
         }
 
-        // // Check if password matches the criteria
-        // if (!user.getPassword().matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!*()]).{8,}$")) {
-        //     addConstraintViolation(context, "Weak password!", "password");
-        //     valid = false;
-        // }
+        // Check if password matches the criteria
+        if (user.getPassword().length() < 5) {
+            addConstraintViolation(context, "Password must have at least 5 characters!", "password");
+            valid = false;
+        }
 
         // Check if password fields match
         if (!user.getPassword().equals(user.getConfirmPassword())) {
