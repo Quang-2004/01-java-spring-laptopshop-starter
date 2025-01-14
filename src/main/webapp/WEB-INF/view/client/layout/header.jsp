@@ -28,20 +28,40 @@
                                     class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                                     style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
-                            <div class="dropdown">
-                                <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" > 
+                            <div class="dropdown my-auto">
+                                <a href="#" class="dropdown" role="button" id="dropdownMenuLink"
+                                    data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
-                                <ul class="dropdown-menu text-small shadow">
-                                    <li><a class="dropdown-item" href="">Tài khoản của tôi</a></li>
-                                    <li><a class="dropdown-item" href="">Đơn mua</a></li>
-                                    <li><a class="dropdown-item" href="">Đăng xuất</a></li>
+
+                                <ul class="dropdown-menu dropdown-menu-end p-4" aria- labelledby="dropdownMenuLink">
+
+                                    <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
+                                        <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
+                                            src="/images/product/1711078092373-asus-01.png" />
+                                        <div class="text-center my-3">
+                                            
+                                        </div>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
+                                    <li><a class="dropdown-item" href="#">Lịch sử mua hàng</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <form method="post" action="/logout">
+                                            <input type="hidden" name="${_csrf.parameterName}"
+                                                value="${_csrf.token}" />
+                                            <button class="dropdown-item">Đăng xuất</button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
-                            
+
                         </div>
                     </div>
-                </nav> 
-            </div>       
-        </div>   
-        <!-- Navbar End -->    
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->

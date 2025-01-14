@@ -1,85 +1,119 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="/client/css/login.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="auth">
-    <div class="auth-container">
-        <div class="auth-box">
-            <h2>Create Your Account!</h2>
-            <p class="subtitle">Sign up to get started with us.</p>
-            <form:form action="/register" method="POST" modelAttribute="registerUser">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+            <!DOCTYPE html>
+            <html lang="en">
 
-               
-                <c:set var="errorEmail">
-                    <form:errors cssClass="invalid-feedback" path="email" />
-                </c:set>
-                <c:set var="errorPassword">
-                    <form:errors cssClass="invalid-feedback" path="password" />
-                </c:set>
-                <c:set var="errorConFirmPassword">
-                    <form:errors cssClass="invalid-feedback" path="confirmPassword" />
-                </c:set>
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+                <meta name="description" content="" />
+                <meta name="author" content="" />
+                <title>Register - Laptopshop</title>
+                <link href="/css/styles.css" rel="stylesheet" />
+                <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+            </head>
 
-                <div class="form-row">
-                    <!-- First Name and Last Name -->
-                    <div class="form-floating">
-                        <c:set var="errorFirstName">
-                            <form:errors cssClass="invalid-feedback" path="firstName" />
-                        </c:set>
+            <body class="bg-primary">
+                <div id="layoutAuthentication">
+                    <div id="layoutAuthentication_content">
+                        <main>
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-7">
+                                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                            <div class="card-header">
+                                                <h3 class="text-center font-weight-light my-4">Create Account</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <form:form method="post" action="/register"
+                                                    modelAttribute="registerUser">
 
-                        <form:input type="text" class="form-control ${not empty errorFirstName ? 'is-invalid' : ''}" 
-                            path="firstName" />
-                        <label for="firstName">First name</label>
-                        ${errorFirstName}
+                                                    <c:set var="errorPassword">
+                                                        <form:errors path="password"
+                                                            cssClass="invalid-feedback" />
+                                                    </c:set>
 
+                                                    <c:set var="errorConfirmPassword">
+                                                        <form:errors path="confirmPassword"
+                                                            cssClass="invalid-feedback" />
+                                                    </c:set>
+
+                                                    <c:set var="errorEmail">
+                                                        <form:errors path="email" cssClass="invalid-feedback" />
+                                                    </c:set>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating mb-3 mb-md-0">
+                                                                <form:input class="form-control" type="text"
+                                                                    placeholder="Enter your first name"
+                                                                    path="firstName" />
+                                                                <label for="inputFirstName">First name</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating">
+                                                                <form:input class="form-control" type="text"
+                                                                    placeholder="Enter your last name"
+                                                                    path="lastName" />
+                                                                <label for="inputLastName">Last name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <form:input
+                                                            class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
+                                                            type="email" placeholder="name@example.com" path="email" />
+                                                        <label>Email address</label>
+                                                        ${errorEmail}
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating mb-3 mb-md-0">
+                                                                <form:input
+                                                                    class="form-control ${not empty errorPassword ? 'is-invalid' : ''}"
+                                                                    type="password" placeholder="Create a password"
+                                                                    path="password" />
+                                                                <label>Password</label>
+                                                                ${errorPassword}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating mb-3 mb-md-0">
+                                                                <form:input class="form-control ${not empty errorConfirmPassword ? 'is-invalid' : ''}" type="password"
+                                                                    placeholder="Confirm password"
+                                                                    path="confirmPassword" />
+                                                                <label>Confirm Password</label>
+                                                                ${errorConfirmPassword}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-4 mb-0">
+                                                        <div class="d-grid">
+                                                            <button class="btn btn-primary btn-block">
+                                                                Create Account
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form:form>
+                                            </div>
+                                            <div class="card-footer text-center py-3">
+                                                <div class="small"><a href="/login">Have an account? Go to login</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
                     </div>
-                    <div class="form-floating">
-                        <form:input type="text" class="form-control" 
-                            path="lastName" />
-                        <label for="lastName">Last name</label>
-                    </div>
+
                 </div>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                    crossorigin="anonymous"></script>
+                <script src="/js/scripts.js"></script>
+            </body>
 
-                <!-- Email Address -->
-                <div class="form-floating">
-                    <form:input type="email" class="form-control ${not empty errorEmail ? 'is-invalid' : ''}" 
-                        path="email" />
-                    <label for="email">Email address</label>
-                    ${errorEmail}
-                </div>
-
-                <!-- Password and Confirm Password -->
-                <div class="form-row">
-                    <div class="form-floating">
-                        <form:input type="password" class="form-control ${not empty errorPassword ? 'is-invalid' : ''}" 
-                            path="password" />
-                        <label for="password">Password</label>
-                        ${errorPassword}
-                    </div>
-
-                    <div class="form-floating">
-                        <form:input type="password" class="form-control ${not empty errorConFirmPassword ? 'is-invalid' : ''}"  
-                            path="confirmPassword" />
-                        <label for="confirmPassword">Confirm Password</label>
-                        ${errorConFirmPassword}
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary mt-3">Sign Up</button>
-            </form:form>
-            <p class="switch mt-3">
-                Already have an account? 
-                <a href="/login" class="transition-link">Login</a>
-            </p>
-        </div>
-    </div>
-</body>
-</html>
+            </html>
