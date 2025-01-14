@@ -41,7 +41,7 @@
                             
                         </div>
                     </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Navbar End -->
+                </nav> 
+            </div>       
+        </div>   
+        <!-- Navbar End -->    
