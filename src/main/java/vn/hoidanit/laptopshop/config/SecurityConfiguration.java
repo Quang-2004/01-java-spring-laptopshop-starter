@@ -27,6 +27,7 @@ public class SecurityConfiguration {
         return new CustomUserDetailsService(userService);
     }
 
+    // nạp tất cả thông tin chúng ta customize và build ra manager
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
             PasswordEncoder passwordEncoder,
