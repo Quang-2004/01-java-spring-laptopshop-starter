@@ -27,17 +27,25 @@
                                                 <h3 class="text-center font-weight-light my-4">Login</h3>
                                             </div>
                                             <div class="card-body">
-                                                <form>
+                                                <form action="/login" method="POST">
+                                                    <c:if test="${param.error != null}">
+                                                        <div class="my-2" style="color: red;">Invalid email or password.
+                                                        </div>
+                                                    </c:if>
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" type="email"
+                                                        <input name="username" class="form-control" type="email"
                                                             placeholder="name@example.com" />
                                                         <label>Email address</label>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" type="password"
+                                                        <input name="password" class="form-control" type="password"
                                                             placeholder="Password" />
                                                         <label>Password</label>
                                                     </div>
+
+                                                    <!-- csrf token -->
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
 
                                                     <div class="mt-4 mb-0">
                                                         <div class="d-grid">
