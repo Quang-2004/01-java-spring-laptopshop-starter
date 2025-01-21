@@ -73,11 +73,13 @@ public class SecurityConfiguration {
                 .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
 
                 .sessionManagement((sessionManagement) -> sessionManagement
-                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // luôn tạo session mới
 
                         .invalidSessionUrl("/logout?expired")
-                        .maximumSessions(1)
-                        .maxSessionsPreventsLogin(false))
+                        .maximumSessions(1) // giới hạn 1 tk login tối đa trên 1 thiết bị 
+                        .maxSessionsPreventsLogin(false)) // neu có thêm1 người login vào thì ng sau đá ng trc
+                        // giống kiểu liên quân 
+                        // nếu là true thì ngc lại 
                 // .logout(logout->logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
 
                 .formLogin(formLogin -> formLogin

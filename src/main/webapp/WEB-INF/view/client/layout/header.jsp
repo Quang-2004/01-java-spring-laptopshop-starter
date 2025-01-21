@@ -40,11 +40,20 @@
                                     <ul class="dropdown-menu dropdown-menu-end p-4" aria- labelledby="dropdownMenuLink">
 
                                         <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
-                                            <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
-                                                src="/images/product/1711078092373-asus-01.png" />
+
+                                            <c:if test="not empty ${sessionScope.avatar}">
+                                                <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
+                                                    src="/images/avatar/${sessionScope.avatar}" />
+                                            </c:if>
+                                            <c:if test="${empty sessionScope.avatar}">
+                                                <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
+                                                    src="/images/avatar/defaut-avatar.jpg" />
+                                            </c:if>
+
                                             <div class="text-center my-3">
-                                                <c:out value="${pageContext.request.userPrincipal.name}" />
+                                                <c:out value="${sessionScope.fullName}" />
                                             </div>
+
                                         </li>
                                         <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
                                         <li><a class="dropdown-item" href="#">Lịch sử mua hàng</a></li>
@@ -63,7 +72,8 @@
                                 </div>
                             </c:if>
                             <c:if test="${empty pageContext.request.userPrincipal}">
-                                <button type="button" class="btn btn-primary mx-lg-3"><a href="/login">Đăng nhập</a></button>
+                                <button type="button" class="btn btn-primary mx-lg-3"><a href="/login">Đăng
+                                        nhập</a></button>
                                 <button type="button" class="btn btn-secondary"><a href="/register">Đăng ký</a></button>
                             </c:if>
 
