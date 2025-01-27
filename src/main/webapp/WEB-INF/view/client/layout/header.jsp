@@ -27,7 +27,7 @@
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                     <span
                                         class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px;">${sessionScope.quantityProuctInCart}</span>
                                 </a>
 
                                 <div class="dropdown my-auto">
@@ -40,8 +40,8 @@
                                     <ul class="dropdown-menu dropdown-menu-end p-4" aria- labelledby="dropdownMenuLink">
 
                                         <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
-
-                                            <c:if test="not empty ${sessionScope.avatar}">
+                                            
+                                            <c:if test="${not empty sessionScope.avatar}">
                                                 <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
                                                     src="/images/avatar/${sessionScope.avatar}" />
                                             </c:if>

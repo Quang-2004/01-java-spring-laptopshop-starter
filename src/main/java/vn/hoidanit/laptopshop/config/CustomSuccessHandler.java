@@ -51,11 +51,14 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 
+        // set thong tin cho sesion khi login thanh cong
         String userName = authentication.getName();
         User currentUser = userService.findByEmail(userName);
         if(currentUser != null){
             session.setAttribute("fullName", currentUser.getFullName());
             session.setAttribute("avatar", currentUser.getAvatar());
+            session.setAttribute("id", currentUser.getId());
+            session.setAttribute("email", currentUser.getEmail());
         }
 
         
