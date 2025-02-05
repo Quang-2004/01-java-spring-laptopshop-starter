@@ -49,43 +49,55 @@ public class ProductService {
         return this.productRepository.save(product);
     }
 
-    public void handleAddProductToCart(String email, long productId){
+    public void handleAddProductToCart(String email, long productId, HttpSession session){
         
         User user = this.userService.findByEmail(email);
         if(user != null){
             // check user đã có cart chưa, nếu chưa thì tạo mới
-            Cart cart = this.cartRepositoty.findByUser(user);
+            Cart cart = this.cartRepositoty.findCartByUser(user);
             if(cart == null){
                 // create new cart
                 Cart otherCart = new Cart();
                 otherCart.setUser(user);
-                otherCart.setSum(1);
+                otherCart.setSum(0);
                 
                 // save cart
                 cart = this.cartRepositoty.save(otherCart);
 
             }
+
             // find product by findById
             Optional<Product> productOptional = Optional.ofNullable(this.productRepository.findById(productId));
             if(productOptional.isPresent()){
                 Product realProduct = productOptional.get();
 
-                // set information cart_detail
-                CartDetail cartDetail = new CartDetail();
-                cartDetail.setCart(cart);
-                cartDetail.setProduct(realProduct);
-                cartDetail.setPrice(realProduct.getPrice());
-                cartDetail.setQuantity(1);
+                // check từng sản phẩm đã đuơc thêm vào trước đó chưa
+                CartDetail oldCartDetail = this.cartDetailRepositoty.findByCartAndProduct(cart, realProduct);
 
-                // save cart_detail
-                this.cartDetailRepositoty.save(cartDetail);
+                if(oldCartDetail == null){
+                    // set information cart_detail
+                    CartDetail cartDetail = new CartDetail();
+                    cartDetail.setCart(cart);
+                    cartDetail.setProduct(realProduct);
+                    cartDetail.setPrice(realProduct.getPrice());
+                    cartDetail.setQuantity(1);
+                    this.cartDetailRepositoty.save(cartDetail);
+
+                    // update sum
+                    int s = cart.getSum() + 1;
+                    cart.setSum(s);
+                    this.cartRepositoty.save(cart); 
+                    session.setAttribute("sum", s);
+                }
+                else{
+                    oldCartDetail.setQuantity(oldCartDetail.getQuantity() + 1);
+                    this.cartDetailRepositoty.save(oldCartDetail);
+                }
+
+                
 
                 
             }
         }  
-    }
-
-    public long countProductByCart(Cart cart){
-        return this.cartDetailRepositoty.countProductByCart(cart);
     }
 }

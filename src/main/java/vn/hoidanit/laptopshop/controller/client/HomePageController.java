@@ -32,7 +32,7 @@ public class HomePageController {
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
 
-    public HomePageController(ProductService productService, 
+    public HomePageController(ProductService productService,
         UserService userService, 
         PasswordEncoder passwordEncoder, 
         RoleService roleService) {
@@ -45,6 +45,7 @@ public class HomePageController {
 
     @GetMapping("/")
     public String getHomePage(Model model, HttpServletRequest request) {
+        
         List<Product> products = this.productService.findAllProducts();
         model.addAttribute("products", products);
         return "client/homepage/show";

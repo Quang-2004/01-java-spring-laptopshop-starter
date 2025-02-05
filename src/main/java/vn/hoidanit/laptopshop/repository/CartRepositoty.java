@@ -12,5 +12,5 @@ public interface CartRepositoty extends JpaRepository<Cart, Long>{
     @SuppressWarnings("unchecked")
     Cart save(Cart cart);
     
-    Cart findByUser(User user);
+    Cart findCartByUser(User user);
 } 
