@@ -70,8 +70,8 @@ public class ItemController {
         User currentUser = this.userService.findByEmail(email);
         // get cart
         Cart currentCart = this.cartRepositoty.findCartByUser(currentUser);
-        List<CartDetail> listCartDetail = this.cartDetailRepositoty.findByCart(currentCart);
-
+        List<CartDetail> listCartDetail =  this.cartDetailRepositoty.findByCart(currentCart);
+       
         double totalPrice = 0;
         for (CartDetail cd : listCartDetail) {
             totalPrice += cd.getPrice() * cd.getQuantity();
