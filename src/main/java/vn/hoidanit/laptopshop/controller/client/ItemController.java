@@ -55,11 +55,22 @@ public class ItemController {
         HttpSession session = request.getSession(false);
 
         String email = (String)session.getAttribute("email"); // username
-        Product product = this.productService.findById(id);
         this.productService.handleAddProductToCart(email, id, session);
 
         return "redirect:/";
     }
+
+    @PostMapping("/delete-cart-product/{id}")
+    public String deleteCartProduct(Model model, @PathVariable long id, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+
+        String email = (String)session.getAttribute("email"); // username
+        this.productService.handleDeleteProductToCart(email, id, session);
+
+        return "redirect:/cart";
+    }
+
     
     @GetMapping("/cart")
     public String getCartDetailPage(Model model, HttpServletRequest request) {

@@ -118,9 +118,16 @@
                                                 </p>
                                             </td>
                                             <td>
-                                                <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                                    <i class="fa fa-times text-danger"></i>
-                                                </button>
+                                                <form action="/delete-cart-product/${cartDetail.product.id}" method="post">
+                                                    <!-- csrf token -->
+                                                    <input type="hidden"
+                                                    name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}" />
+                                                    <button class="btn btn-md rounded-circle bg-light border mt-4">
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    </button>
+                                                </form>
+                                                
                                             </td>
 
                                         </tr>

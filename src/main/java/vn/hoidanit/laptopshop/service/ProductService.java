@@ -93,11 +93,30 @@ public class ProductService {
                     oldCartDetail.setQuantity(oldCartDetail.getQuantity() + 1);
                     this.cartDetailRepositoty.save(oldCartDetail);
                 }
-
-                
-
-                
             }
         }  
+    }
+
+    public void handleDeleteProductToCart(String email, long productId, HttpSession session){
+        User user = this.userService.findByEmail(email);
+
+        Cart cart = this.cartRepositoty.findCartByUser(user);
+        // find product by findById
+        Optional<Product> productOptional = Optional.ofNullable(this.productRepository.findById(productId));
+        if(productOptional.isPresent()){
+            Product realProduct = productOptional.get();
+
+            // delete product 
+            this.cartDetailRepositoty.deleteByCartAndProduct(cart, realProduct);
+
+
+            // update cart
+            int s = cart.getSum();
+
+            cart.setSum(s - 1);
+            this.cartRepositoty.save(cart);
+            session.setAttribute("sum", s - 1);
+              
+        }
     }
 }
