@@ -1,11 +1,13 @@
 package vn.hoidanit.laptopshop.controller.client;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.hoidanit.laptopshop.domain.Cart;
@@ -14,10 +16,12 @@ import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.repository.CartDetailRepositoty;
 import vn.hoidanit.laptopshop.repository.CartRepositoty;
+import vn.hoidanit.laptopshop.service.OrderService;
 import vn.hoidanit.laptopshop.service.ProductService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,14 +35,16 @@ public class ItemController {
     private final CartRepositoty cartRepositoty;
     private final UserService userService;
     private final CartDetailRepositoty cartDetailRepositoty;
+    private final OrderService orderService;
 
     
     public ItemController(ProductService productService, CartRepositoty cartRepositoty
-    , UserService userService, CartDetailRepositoty cartDetailRepositoty) {
+    , UserService userService, CartDetailRepositoty cartDetailRepositoty,  OrderService orderService) {
         this.productService = productService;
         this.cartRepositoty = cartRepositoty;
         this.userService = userService;
         this.cartDetailRepositoty = cartDetailRepositoty;
+        this.orderService = orderService;
     }
 
     @GetMapping("/product/{id}")
@@ -88,8 +94,60 @@ public class ItemController {
             totalPrice += cd.getPrice() * cd.getQuantity();
         }
         
-        model.addAttribute("listCartDetail", listCartDetail);
+        model.addAttribute("cartDetails", listCartDetail);
         model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cart", currentCart);
         return "client/cart/show";
     }
+
+    @GetMapping("/checkout")
+    public String getCheckOutPage(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        String email = (String)session.getAttribute("email"); // username
+        // get user
+        User currentUser = this.userService.findByEmail(email);
+        // get cart
+        Cart currentCart = this.cartRepositoty.findCartByUser(currentUser);
+        List<CartDetail> listCartDetail =  this.cartDetailRepositoty.findByCart(currentCart);
+       
+        double totalPrice = 0;
+        for (CartDetail cd : listCartDetail) {
+            totalPrice += cd.getPrice() * cd.getQuantity();
+        }
+        
+        model.addAttribute("cartDetails", listCartDetail);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("cart", new Cart());
+        
+
+        return "client/cart/checkout";
+    }
+
+    @PostMapping("/confirm-checkout")
+    public String getCheckOutPage(@ModelAttribute("cart") Cart cart) {
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+        this.productService.handleUpdateCartBeforeCheckout(cartDetails);
+        return "redirect:/checkout";
+    }
+
+    @PostMapping("/place-order")
+    public String handlePlaceOrder(HttpServletRequest request,
+        @RequestParam("receiverName") String receiverName,
+        @RequestParam("receiverAddress") String receiverAddress,
+        @RequestParam("receiverPhone") String receiverPhone) {
+        
+        HttpSession session = request.getSession(false);
+
+        this.orderService.handleSaveOrder(session, receiverName, receiverAddress, receiverPhone);
+        return "redirect:/thanks";
+    }
+
+    @GetMapping("/thanks")
+    public String getThanksPage() {
+        return "client/cart/thanks";
+    }
+    
+
 }

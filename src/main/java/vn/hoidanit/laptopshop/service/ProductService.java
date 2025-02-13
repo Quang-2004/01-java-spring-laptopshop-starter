@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
@@ -118,5 +117,35 @@ public class ProductService {
             session.setAttribute("sum", s - 1);
               
         }
+    }
+
+    public void handleClearCart(HttpSession session){
+        String username = (String) session.getAttribute("email");
+        User user = this.userService.findByEmail(username);
+
+        Cart cart = this.cartRepositoty.findCartByUser(user);
+        
+        List<CartDetail> cartDetails = this.cartDetailRepositoty.findByCart(cart);
+        for (CartDetail cartDetail : cartDetails) {
+            this.cartDetailRepositoty.delete(cartDetail);
+        }
+        // update cart
+
+        cart.setSum(0);
+        this.cartRepositoty.save(cart);
+        session.setAttribute("sum", 0);
+              
+        
+    }
+
+    public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails){
+        for (CartDetail cartDetail : cartDetails) {
+            Optional<CartDetail> cdOptional = this.cartDetailRepositoty.findById(cartDetail.getId());
+            if(cdOptional.isPresent()){
+                CartDetail currentCartDetail = cdOptional.get();
+                currentCartDetail.setQuantity(cartDetail.getQuantity());
+                this.cartDetailRepositoty.save(currentCartDetail);
+            }
+        }    
     }
 }
