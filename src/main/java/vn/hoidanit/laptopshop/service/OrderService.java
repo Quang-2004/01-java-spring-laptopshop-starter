@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.servlet.http.HttpSession;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
@@ -49,6 +49,11 @@ public class OrderService {
         return this.orderRepository.findOrderByUser(user);
     }
 
+
+    public List<Order> findAll(){
+        return this.orderRepository.findAll();
+    }
+
     public void handleSaveOrder(HttpSession session, 
         String receiverName, 
         String receiverAddress,
@@ -75,6 +80,7 @@ public class OrderService {
         order.setReceiverName(receiverName);
         order.setReceiverPhone(receiverPhone);
         order.setReveiverAddress(receiverAddress);
+        order.setStatus("PENDING");
 
         // save Order
         order = this.orderRepository.save(order);
@@ -117,5 +123,25 @@ public class OrderService {
         // delete cartDetail and cart
         this.productService.handleClearCart(session);
 
+    }
+
+    public List<OrderDetail> findByOrder(Order order){
+        return this.orderDetailRepository.findByOrder(order);
+    }
+
+    public Order findById(long id){
+        return this.orderRepository.findById(id);
+    }
+
+    public Order handleSaveOrder(Order order){
+        return this.orderRepository.save(order);
+    }
+
+    public void deleteById(long id){
+        this.orderRepository.deleteById(id);
+    }
+
+    public void deleteByOrder(Order order){
+        this.orderDetailRepository.deleteByOrder(order);
     }
 }
