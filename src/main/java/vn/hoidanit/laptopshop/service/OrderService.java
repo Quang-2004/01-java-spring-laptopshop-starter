@@ -45,7 +45,7 @@ public class OrderService {
         this.orderDetailRepository = orderDetailRepository;
     }
 
-    public Order findOrderByUser(User user){
+    public List<Order> findOrderByUser(User user){
         return this.orderRepository.findOrderByUser(user);
     }
 
@@ -109,6 +109,13 @@ public class OrderService {
 
             // save orderDetail
             this.orderDetailRepository.save(orderDetail);
+
+            // tru ton kho
+            Product productInventory = this.productService.findById(productID); // san pham trong kho
+            productInventory.setQuantity(productInventory.getQuantity() - product.getQuantity());
+            productInventory.setSold(productInventory.getSold() + product.getQuantity());
+            // save
+            this.productService.handleSaveProduct(productInventory);
         }
 
         

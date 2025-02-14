@@ -4,6 +4,7 @@ package vn.hoidanit.laptopshop.controller.client;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
+import vn.hoidanit.laptopshop.domain.Order;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.repository.CartDetailRepositoty;
@@ -56,12 +58,13 @@ public class ItemController {
     }
 
     @PostMapping("/add-product-to-cart/{id}")
-    public String addProductToCart(Model model, @PathVariable long id, HttpServletRequest request) {
+    public String addProductToCart(Model model, @PathVariable long id, 
+        HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
 
         String email = (String)session.getAttribute("email"); // username
-        this.productService.handleAddProductToCart(email, id, session);
+        this.productService.handleAddProductToCart(email, id, session, 1);
 
         return "redirect:/";
     }
@@ -148,6 +151,36 @@ public class ItemController {
     public String getThanksPage() {
         return "client/cart/thanks";
     }
+
+    @GetMapping("/order-history")
+    public String getOrderHistoryPage(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        // get username
+        String username = (String) session.getAttribute("email");
+        // get user
+        User user = this.userService.findByEmail(username);
+
+        // get Order
+        List<Order> orders = this.orderService.findOrderByUser(user);
+        if(orders != null){
+            model.addAttribute("orders", orders);
+        }
+        return "client/cart/order-history";
+    }
     
+    @PostMapping("/add-product-from-view-detail")
+    public String handleAddProductFromViewDetail(
+        @RequestParam("id") long id,
+        @RequestParam("quantity") long quantity,
+        HttpServletRequest request
+        ) {
+
+        HttpSession session = request.getSession(false);
+
+        String email = (String)session.getAttribute("email"); // username
+        this.productService.handleAddProductToCart(email, id, session, quantity);
+
+        return "redirect:/product/" + id;
+    }
 
 }

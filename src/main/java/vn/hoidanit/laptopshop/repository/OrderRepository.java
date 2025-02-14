@@ -1,5 +1,7 @@
 package vn.hoidanit.laptopshop.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +15,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
     @SuppressWarnings("unchecked")
     Order save(Order order);
 
-    Order findOrderByUser(User user);
+    List<Order> findOrderByUser(User user);
 
     Order findById(long id);
 
