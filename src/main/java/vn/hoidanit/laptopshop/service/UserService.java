@@ -61,4 +61,8 @@ public class UserService {
     public boolean checkEmailExist(String email){
         return this.userRepository.existsByEmail(email);
     }
+
+    public long count(){
+        return this.userRepository.count();
+    }
 }

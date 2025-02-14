@@ -144,4 +144,8 @@ public class OrderService {
     public void deleteByOrder(Order order){
         this.orderDetailRepository.deleteByOrder(order);
     }
+
+    public long count(){
+        return this.orderRepository.count();
+    }
 }
