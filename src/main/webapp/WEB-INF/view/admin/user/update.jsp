@@ -47,11 +47,20 @@
                         </ol>
                         <div class="container col-6">
                             <h3>Update a user</h3> <hr>
-                            <form:form action="/admin/user/update" method="POST" modelAttribute="newUser"
+                            <form:form action="/admin/user/update" method="POST" modelAttribute="updateUser"
                                 enctype="multipart/form-data">
+
+                                <c:set var="errorFullname">
+                                    <form:errors path="fullName" cssClass="invalid-feedback"/>
+                                </c:set>
+
                                 <div class="mb-3" style="display: none;">
                                     <label class="form-label">Id: </label>
                                     <form:input type="text" class="form-control" path="id"/>
+                                </div>
+                                <div class="mb-3" style="display: none;">
+                                    <label class="form-label">Id: </label>
+                                    <form:input type="text" class="form-control" path="password"/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Email: </label>
@@ -82,15 +91,25 @@
                                         <form:option value="ADMIN">ADMIN</form:option>
                                     </form:select>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 col-6">
                                     <label for="avatarFile" class="form-label">Avatar: </label>
-                                    <input type="file" class="form-control" id="avatarFile" name="hoidanitFile"
-                                        accept=".png, .jpg, .jpeg"/>
+                                    <input type="file" class="form-control" id="avatarFile" name="avatarPreview" 
+                                        accept=".png, .jpg, .jpeg"/>	
                                 </div>
+                            
+                               
                                 <div class="row">
                                     <div class="col-6">
-                                        <img style="max-height: 250px; display: none;" alt="avatar preview"
-                                            id="avatarPreview">
+                                        <c:if test="${not empty updateUser.avatar}">
+                                            <img id="avatarPreview" style="max-height: 250px;" 
+                                            src="/images/avatar/${updateUser.avatar}" 
+                                             alt="Avatar Image">
+                                        </c:if>
+                                        <c:if test="${empty updateUser.avatar}">
+                                            <img id="avatarPreview" style="max-height: 250px;" 
+                                            src="/images/avatar/defaut-avatar.jpg" 
+                                             alt="Avatar Image">
+                                        </c:if>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Update</button>

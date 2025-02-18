@@ -18,14 +18,15 @@ public class UploadService {
         this.servletContext = servletContext;
     }
 
-    public String handleSaveUploadFile(MultipartFile file, String targetFolder){
+    public String handleSaveUploadFile(MultipartFile file, String targetFolder) {
         // don't upload file
-        if(file.isEmpty()) return "";
+        if (file.isEmpty())
+            return "";
 
         String finalName = "";
         try {
             byte[] bytes = file.getBytes();
-            
+
             String rootPath = this.servletContext.getRealPath("/resources/images");
             File dir = new File(rootPath + File.separator + targetFolder);
 
@@ -33,11 +34,11 @@ public class UploadService {
                 dir.mkdirs();
 
             // Create the file on server
-            File serverFile = new File(dir.getAbsolutePath() + File.separator +
-                    + System.currentTimeMillis() + "-" + file.getOriginalFilename());
-                    // uuid in mongodb
+            // uuid in mongodb
             finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + finalName);
+            
+            
             BufferedOutputStream stream = new BufferedOutputStream(
                     new FileOutputStream(serverFile));
             stream.write(bytes);

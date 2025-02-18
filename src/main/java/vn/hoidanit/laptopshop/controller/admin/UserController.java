@@ -69,7 +69,7 @@ public class UserController {
     public String getUpdateUser(Model model, @PathVariable long id) {
         User currentUser = this.userService.findById(id);
         
-        model.addAttribute("newUser", currentUser);
+        model.addAttribute("updateUser", currentUser);
         return "admin/user/update";
     }
 
@@ -77,7 +77,7 @@ public class UserController {
     public String updateUser(Model model, 
         @ModelAttribute("updateUser") @Valid User updateUser,
         BindingResult newUserBindingResult,
-        @RequestParam("hoidanitFile") MultipartFile file) {
+        @RequestParam("avatarPreview") MultipartFile file) {
 
         List<FieldError> errors = newUserBindingResult.getFieldErrors();
         for (FieldError error : errors ) {
@@ -92,15 +92,16 @@ public class UserController {
         User currentUser = this.userService.findById(updateUser.getId());
         if(currentUser != null){
             String avatar = "";
-            if(!file.isEmpty()){
-                avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
-            }
-
+            
             currentUser.setAddress(updateUser.getAddress());
             currentUser.setFullName(updateUser.getFullName());
             currentUser.setPhoneNumber(updateUser.getPhoneNumber());
-            currentUser.setAvatar(avatar);
             currentUser.setRole(this.roleService.findByName(updateUser.getRole().getName()));
+            if(!file.isEmpty()){
+                avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+                currentUser.setAvatar(avatar);
+            }
+            
             this.userService.handleSaveUser(currentUser);
         }
         
@@ -132,7 +133,7 @@ public class UserController {
     public String createUserPage(Model model, 
         @ModelAttribute("newUser") @Valid User hoidanit, 
         BindingResult newUserBindingResult,                                            
-        @RequestParam("hoidanitFile") MultipartFile file
+        @RequestParam("avatarPreview") MultipartFile file
         ){
 
         

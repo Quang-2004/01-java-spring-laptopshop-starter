@@ -36,6 +36,26 @@
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
                 <link href="/client/css/empty-cart.css" rel="stylesheet">
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const selectAllCheckbox = document.getElementById("selectAll");
+                        const itemCheckboxes = document.querySelectorAll(".item-checkbox");
+            
+                        // Khi chọn "Chọn tất cả"
+                        selectAllCheckbox.addEventListener("change", function() {
+                            itemCheckboxes.forEach(checkbox => {
+                                checkbox.checked = selectAllCheckbox.checked;
+                            });
+                        });
+            
+                        // Khi chọn/bỏ chọn từng sản phẩm
+                        itemCheckboxes.forEach(checkbox => {
+                            checkbox.addEventListener("change", function() {
+                                selectAllCheckbox.checked = [...itemCheckboxes].every(cb => cb.checked);
+                            });
+                        });
+                    });
+                </script>
             </head>
 
             <body>
@@ -60,6 +80,9 @@
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">
+                                            <input class="form-check-input" type="checkbox" id="selectAll">
+                                        </th>
                                         <th scope="col">Sản phẩm</th>
                                         <th scope="col">Tên sản phẩm</th>
                                         <th scope="col">Giá</th>
@@ -72,13 +95,16 @@
                                     <c:forEach var="cartDetail" items="${cartDetails}" varStatus="status">
 
                                             <tr>
-                                                <th scope="row">
+                                                <th>
+                                                    <input class="form-check-input item-checkbox" type="checkbox" value="" aria-checked="false">
+                                                </th>
+                                                <td scope="row">
                                                     <div class="d-flex align-items-center">
                                                         <img src="/images/product/${cartDetail.product.image}"
                                                             class="img-fluid me-5 rounded-circle"
                                                             style="width: 80px; height: 80px;" alt="">
                                                     </div>
-                                                </th>
+                                                </td>
                                                 <td>
                                                     <p class="mb-0 mt-4">
                                                         <a href="/product/${cartDetail.product.id}" target="_blank">
