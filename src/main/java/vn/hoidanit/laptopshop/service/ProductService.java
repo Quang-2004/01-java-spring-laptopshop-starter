@@ -96,17 +96,17 @@ public class ProductService {
         }  
     }
 
-    public void handleDeleteProductToCart(String email, long productId, HttpSession session){
+    public void handleDeleteProductToCart(String email, long cartDetailId, HttpSession session){
         User user = this.userService.findByEmail(email);
 
         Cart cart = this.cartRepositoty.findCartByUser(user);
         // find product by findById
-        Optional<Product> productOptional = Optional.ofNullable(this.productRepository.findById(productId));
-        if(productOptional.isPresent()){
-            Product realProduct = productOptional.get();
+        Optional<CartDetail> cartDetailOptional = Optional.ofNullable(this.cartDetailRepositoty.findById(cartDetailId));
+        if(cartDetailOptional.isPresent()){
+            CartDetail realCartDetail= cartDetailOptional.get();
 
             // delete product 
-            this.cartDetailRepositoty.deleteByCartAndProduct(cart, realProduct);
+            this.cartDetailRepositoty.deleteById(realCartDetail.getId());
 
 
             // update cart
@@ -140,7 +140,7 @@ public class ProductService {
 
     public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails){
         for (CartDetail cartDetail : cartDetails) {
-            Optional<CartDetail> cdOptional = this.cartDetailRepositoty.findById(cartDetail.getId());
+            Optional<CartDetail> cdOptional = Optional.ofNullable(this.cartDetailRepositoty.findById(cartDetail.getId()));
             if(cdOptional.isPresent()){
                 CartDetail currentCartDetail = cdOptional.get();
                 currentCartDetail.setQuantity(cartDetail.getQuantity());
@@ -153,3 +153,5 @@ public class ProductService {
         return this.productRepository.count();
     }
 }
+
+    

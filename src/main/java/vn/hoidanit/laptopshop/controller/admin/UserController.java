@@ -20,6 +20,8 @@ import vn.hoidanit.laptopshop.service.UserService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,7 +79,8 @@ public class UserController {
     public String updateUser(Model model, 
         @ModelAttribute("updateUser") @Valid User updateUser,
         BindingResult newUserBindingResult,
-        @RequestParam("avatarPreview") MultipartFile file) {
+        @RequestParam("avatarPreview") MultipartFile file,
+        HttpServletRequest request) {
 
         List<FieldError> errors = newUserBindingResult.getFieldErrors();
         for (FieldError error : errors ) {
@@ -103,6 +106,11 @@ public class UserController {
             }
             
             this.userService.handleSaveUser(currentUser);
+
+            //update session
+            HttpSession session = request.getSession(false);
+            session.setAttribute("fullName", currentUser.getFullName());
+            session.setAttribute("avatar", currentUser.getAvatar());
         }
         
         System.out.println("run here");

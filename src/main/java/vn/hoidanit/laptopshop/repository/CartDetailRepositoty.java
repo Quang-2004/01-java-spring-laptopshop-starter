@@ -17,6 +17,8 @@ public interface CartDetailRepositoty extends JpaRepository<CartDetail, Long>{
         @SuppressWarnings("unchecked")
         CartDetail save(CartDetail cartDetail);
 
+        CartDetail findById(long cartDetail);
+
         boolean existsByCartAndProduct(Cart cart, Product product);
 
         List<CartDetail> findByCart(Cart cart);
@@ -28,6 +30,9 @@ public interface CartDetailRepositoty extends JpaRepository<CartDetail, Long>{
 
         @Transactional
         void deleteByCartAndProduct(Cart cart, Product product);
+
+
+        void deleteById(long id);
 
     
 }
