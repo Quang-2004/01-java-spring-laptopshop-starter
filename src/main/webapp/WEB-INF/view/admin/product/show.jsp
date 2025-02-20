@@ -78,6 +78,7 @@
                                                     </tbody>
                                                 </c:forEach>
                                             </table>
+                                            <!--PAGINATION-->
                                             <nav aria-label="Page navigation example">
                                                 <ul class="pagination justify-content-center">
                                                     <li class="page-item">
@@ -106,6 +107,7 @@
                                                     </li>
                                                 </ul>
                                             </nav>
+                                            <!--END PAGINATION-->
                                         </div>
                                     </div>
                                 </div>
