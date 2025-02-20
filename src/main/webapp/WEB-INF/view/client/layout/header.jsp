@@ -42,7 +42,7 @@
                                     <ul class="dropdown-menu dropdown-menu-end p-4" aria- labelledby="dropdownMenuLink">
 
                                         <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
-                                            
+
                                             <c:if test="${not empty sessionScope.avatar}">
                                                 <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
                                                     src="/images/avatar/${sessionScope.avatar}" />
@@ -57,7 +57,8 @@
                                             </div>
 
                                         </li>
-                                        <li><a class="dropdown-item" href="/account/my-profile">Tài khoản của tôi</a></li>
+                                        <li><a class="dropdown-item" href="/account/my-profile">Tài khoản của tôi</a>
+                                        </li>
                                         <li><a class="dropdown-item" href="/order-history">Lịch sử mua hàng</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
@@ -74,9 +75,9 @@
                                 </div>
                             </c:if>
                             <c:if test="${empty pageContext.request.userPrincipal}">
-                                <button type="button" class="btn btn-primary mx-lg-3"><a href="/login">Đăng
-                                        nhập</a></button>
-                                <button type="button" class="btn btn-secondary"><a href="/register">Đăng ký</a></button>
+                                <h5><a href="/login">Đăng nhập</a></h5>
+                                <h5><p> | </p></h5>
+                                <h5><a href="/register">Đăng ký</a></h5>
                             </c:if>
 
 

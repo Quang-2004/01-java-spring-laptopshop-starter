@@ -1,6 +1,5 @@
 package vn.hoidanit.laptopshop.service.validator;
 
-import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
