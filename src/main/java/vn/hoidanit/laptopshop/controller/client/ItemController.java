@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -190,7 +190,8 @@ public class ItemController {
 
     @GetMapping("/products")
     public String getProductsPage(Model model,
-    @RequestParam("page") Optional<String> pageOptional){
+    @RequestParam("page") Optional<String> pageOptional,
+    @RequestParam("name") Optional<String> nameOptional){
         int page = 1;
         try {
             if(pageOptional.isPresent()){
@@ -204,8 +205,10 @@ public class ItemController {
             // TODO: handle exception
         }
 
+        String name = nameOptional.get();
+
         Pageable pageable = PageRequest.of(page - 1, 5);
-        Page<Product> prs = this.productService.findAllProducts(pageable);
+        Page<Product> prs = this.productService.findAllProducts(pageable, name);
 
         List<Product> listProducts = prs.getContent();
 

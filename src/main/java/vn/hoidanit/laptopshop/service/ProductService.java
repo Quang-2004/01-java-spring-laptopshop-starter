@@ -1,16 +1,19 @@
 package vn.hoidanit.laptopshop.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
+import vn.hoidanit.laptopshop.domain.Product_;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.repository.CartDetailRepositoty;
 import vn.hoidanit.laptopshop.repository.CartRepositoty;
@@ -18,13 +21,11 @@ import vn.hoidanit.laptopshop.repository.ProductRepository;
 
 @Service
 public class ProductService {
-    
+
     private final ProductRepository productRepository;
     private final CartRepositoty cartRepositoty;
     private final CartDetailRepositoty cartDetailRepositoty;
     private final UserService userService;
-
-    
 
     public ProductService(ProductRepository productRepository, CartRepositoty cartRepositoty,
             CartDetailRepositoty cartDetailRepositoty, UserService userService) {
@@ -34,34 +35,44 @@ public class ProductService {
         this.userService = userService;
     }
 
-    public Page<Product> findAllProducts(Pageable page){
+    public Specification<Product> nameLike(String name) {
+        return (root, query, createriaBuilder) -> {
+            return createriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
+        };
+    }
+
+    public Page<Product> findAllProducts(Pageable page) {
         return this.productRepository.findAll(page);
     }
 
-    public Product findById(long id){
+    public Page<Product> findAllProducts(Pageable page, String name) {
+        return this.productRepository.findAll(this.nameLike(name),page);
+    }
+
+    public Product findById(long id) {
         return this.productRepository.findById(id);
     }
 
-    public void deleteById(long id){
+    public void deleteById(long id) {
         this.productRepository.deleteById(id);
     }
 
-    public Product handleSaveProduct(Product product){
+    public Product handleSaveProduct(Product product) {
         return this.productRepository.save(product);
     }
 
-    public void handleAddProductToCart(String email, long productId, HttpSession session, long quantity){
-        
+    public void handleAddProductToCart(String email, long productId, HttpSession session, long quantity) {
+
         User user = this.userService.findByEmail(email);
-        if(user != null){
+        if (user != null) {
             // check user đã có cart chưa, nếu chưa thì tạo mới
             Cart cart = this.cartRepositoty.findCartByUser(user);
-            if(cart == null){
+            if (cart == null) {
                 // create new cart
                 Cart otherCart = new Cart();
                 otherCart.setUser(user);
                 otherCart.setSum(0);
-                
+
                 // save cart
                 cart = this.cartRepositoty.save(otherCart);
 
@@ -69,13 +80,13 @@ public class ProductService {
 
             // find product by findById
             Optional<Product> productOptional = Optional.ofNullable(this.productRepository.findById(productId));
-            if(productOptional.isPresent()){
+            if (productOptional.isPresent()) {
                 Product realProduct = productOptional.get();
 
                 // check từng sản phẩm đã đuơc thêm vào trước đó chưa
                 CartDetail oldCartDetail = this.cartDetailRepositoty.findByCartAndProduct(cart, realProduct);
 
-                if(oldCartDetail == null){
+                if (oldCartDetail == null) {
                     // set information cart_detail
                     CartDetail cartDetail = new CartDetail();
                     cartDetail.setCart(cart);
@@ -87,29 +98,27 @@ public class ProductService {
                     // update sum
                     int s = cart.getSum() + 1;
                     cart.setSum(s);
-                    this.cartRepositoty.save(cart); 
+                    this.cartRepositoty.save(cart);
                     session.setAttribute("sum", s);
-                }
-                else{
+                } else {
                     oldCartDetail.setQuantity(oldCartDetail.getQuantity() + quantity);
                     this.cartDetailRepositoty.save(oldCartDetail);
                 }
             }
-        }  
+        }
     }
 
-    public void handleDeleteProductToCart(String email, long cartDetailId, HttpSession session){
+    public void handleDeleteProductToCart(String email, long cartDetailId, HttpSession session) {
         User user = this.userService.findByEmail(email);
 
         Cart cart = this.cartRepositoty.findCartByUser(user);
         // find product by findById
         Optional<CartDetail> cartDetailOptional = Optional.ofNullable(this.cartDetailRepositoty.findById(cartDetailId));
-        if(cartDetailOptional.isPresent()){
-            CartDetail realCartDetail= cartDetailOptional.get();
+        if (cartDetailOptional.isPresent()) {
+            CartDetail realCartDetail = cartDetailOptional.get();
 
-            // delete product 
+            // delete product
             this.cartDetailRepositoty.deleteById(realCartDetail.getId());
-
 
             // update cart
             int s = cart.getSum();
@@ -117,16 +126,16 @@ public class ProductService {
             cart.setSum(s - 1);
             this.cartRepositoty.save(cart);
             session.setAttribute("sum", s - 1);
-              
+
         }
     }
 
-    public void handleClearCart(HttpSession session){
+    public void handleClearCart(HttpSession session) {
         String username = (String) session.getAttribute("email");
         User user = this.userService.findByEmail(username);
 
         Cart cart = this.cartRepositoty.findCartByUser(user);
-        
+
         List<CartDetail> cartDetails = this.cartDetailRepositoty.findByCart(cart);
         for (CartDetail cartDetail : cartDetails) {
             this.cartDetailRepositoty.delete(cartDetail);
@@ -136,24 +145,22 @@ public class ProductService {
         cart.setSum(0);
         this.cartRepositoty.save(cart);
         session.setAttribute("sum", 0);
-              
-        
+
     }
 
-    public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails){
+    public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails) {
         for (CartDetail cartDetail : cartDetails) {
-            Optional<CartDetail> cdOptional = Optional.ofNullable(this.cartDetailRepositoty.findById(cartDetail.getId()));
-            if(cdOptional.isPresent()){
+            Optional<CartDetail> cdOptional = Optional
+                    .ofNullable(this.cartDetailRepositoty.findById(cartDetail.getId()));
+            if (cdOptional.isPresent()) {
                 CartDetail currentCartDetail = cdOptional.get();
                 currentCartDetail.setQuantity(cartDetail.getQuantity());
                 this.cartDetailRepositoty.save(currentCartDetail);
             }
-        }    
+        }
     }
 
-    public long count(){
+    public long count() {
         return this.productRepository.count();
     }
 }
-
-    

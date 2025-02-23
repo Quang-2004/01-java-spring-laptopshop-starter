@@ -59,12 +59,13 @@
                                     <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
                                 </ol>
                             </nav>
-
                             <!-- PRODUCTS-->
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane fade show p-0 active">
                                     <div class="row g-4">
+                                        
                                         <div class="col-lg-3">
+                                            
                                             <div class="factory">
                                                 <h6>Hãng sản xuất</h6>
                                                 <div class="form-check form-check-inline">
@@ -104,29 +105,34 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
                                                         value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Gamming</label>
+                                                    <label class="form-check-label"
+                                                        for="inlineCheckbox1">Gamming</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Sinh viên - Văn phòng</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Sinh viên -
+                                                        Văn phòng</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Thiết kế đồ họa</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Thiết kế đồ
+                                                        họa</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
                                                         value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Mỏng nhẹ</label>
+                                                    <label class="form-check-label" for="inlineCheckbox1">Mỏng
+                                                        nhẹ</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Doanh nhân</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Doanh
+                                                        nhân</label>
                                                 </div>
-                                                
+
                                             </div><br>
 
                                             <div class="price">
@@ -134,24 +140,28 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
                                                         value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Dưới 10 triệu</label>
+                                                    <label class="form-check-label" for="inlineCheckbox1">Dưới 10
+                                                        triệu</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Từ 10 - 15 triệu</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Từ 10 - 15
+                                                        triệu</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Từ 15 - 20 triệu</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Từ 15 - 20
+                                                        triệu</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
                                                         value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Trên 20 triệu</label>
+                                                    <label class="form-check-label" for="inlineCheckbox1">Trên 20
+                                                        triệu</label>
                                                 </div>
-                                                
+
                                             </div><br>
 
                                             <div class="sort">
@@ -159,21 +169,26 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
                                                         value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Giá tăng dần</label>
+                                                    <label class="form-check-label" for="inlineCheckbox1">Giá tăng
+                                                        dần</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Giá giảm dần</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Giá giảm
+                                                        dần</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Không sắp xếp</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Không sắp
+                                                        xếp</label>
                                                 </div>
                                             </div><br>
                                             <div class="d-flex justify-content-center my-4">
-                                                <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Lọc sản phẩm</a>
+                                                <a href="#"
+                                                    class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Lọc
+                                                    sản phẩm</a>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -190,8 +205,10 @@
                                                                 style="top: 10px; left: 10px;">Laptop</div>
                                                             <div
                                                                 class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                                <h4 style="font-size: 15px" class="text-center">${product.name}</h4>
-                                                                <p style="font-size: 13px" class="text-center">${product.shortDesc}</p>
+                                                                <h4 style="font-size: 15px" class="text-center">
+                                                                    ${product.name}</h4>
+                                                                <p style="font-size: 13px" class="text-center">
+                                                                    ${product.shortDesc}</p>
                                                                 <div class="d-flex flex-lg-wrap justify-content-center">
                                                                     <p style="font-size: 15px; text-align: center; width: 100%;"
                                                                         class="text-dark fs-5 fw-bold mb-2">
@@ -217,20 +234,22 @@
                                                 </c:forEach>
                                             </div>
                                             <!--PAGINATION-->
-                        
+
                                             <div class="col-12">
                                                 <div class="pagination d-flex justify-content-center mt-5">
-                                                    
-                                                    <a href="${currentPage eq 1 ? '#' : '/products?page='}${currentPage - 1}" class="rounded">&laquo;</a>
-                                                
+
+                                                    <a href="${currentPage eq 1 ? '#' : '/products?page='}${currentPage - 1}"
+                                                        class="rounded">&laquo;</a>
+
                                                     <c:forEach begin="1" end="${totalPages}" varStatus="loop">
                                                         <a class="rounded ${currentPage eq loop.index ? 'active ' : ''}"
                                                             href="/products?page=${loop.index}">
                                                             ${loop.index}
                                                         </a>
                                                     </c:forEach>
-                                                    
-                                                    <a href="${currentPage eq totalPages ? '#' : '/products?page='}${currentPage + 1}" class="rounded">&raquo;</a>
+
+                                                    <a href="${currentPage eq totalPages ? '#' : '/products?page='}${currentPage + 1}"
+                                                        class="rounded">&raquo;</a>
                                                 </div>
                                             </div>
                                             <!--END PAGINATION-->
@@ -240,7 +259,7 @@
                             </div>
                             <!-- PRODUCTS-->
                         </div>
-                        
+
                     </div>
                 </div>
                 <!-- Single Product End -->
