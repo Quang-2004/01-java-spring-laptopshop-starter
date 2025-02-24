@@ -207,8 +207,14 @@
                                                                 class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                 <h4 style="font-size: 15px" class="text-center">
                                                                     ${product.name}</h4>
-                                                                <p style="font-size: 13px" class="text-center">
-                                                                    ${product.shortDesc}</p>
+                                                                    <p class="text-center" style="display: -webkit-box;
+                                                                        -webkit-line-clamp: 2;
+                                                                        -webkit-box-orient: vertical;
+                                                                        overflow: hidden;
+                                                                        text-overflow: ellipsis;
+                                                                        font-size: 13px;">
+                                                                        ${product.shortDesc}
+                                                                    </p>
                                                                 <div class="d-flex flex-lg-wrap justify-content-center">
                                                                     <p style="font-size: 15px; text-align: center; width: 100%;"
                                                                         class="text-dark fs-5 fw-bold mb-2">

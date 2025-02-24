@@ -19,6 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     
     Product findById(long id);
 
+    Product findByFactory(String factory);
+
     @Transactional
     void deleteById(long id);
 
@@ -27,4 +29,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     Page<Product> findAll(Pageable pageable);
 
     Page<Product> findAll(Specification<Product> spec, Pageable pageable);
+
+
 }

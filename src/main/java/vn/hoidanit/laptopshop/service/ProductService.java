@@ -1,23 +1,21 @@
 package vn.hoidanit.laptopshop.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
-import vn.hoidanit.laptopshop.domain.Product_;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.repository.CartDetailRepositoty;
 import vn.hoidanit.laptopshop.repository.CartRepositoty;
 import vn.hoidanit.laptopshop.repository.ProductRepository;
+import vn.hoidanit.laptopshop.service.specification.ProductSpecs;
 
 @Service
 public class ProductService {
@@ -35,18 +33,8 @@ public class ProductService {
         this.userService = userService;
     }
 
-    public Specification<Product> nameLike(String name) {
-        return (root, query, createriaBuilder) -> {
-            return createriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
-        };
-    }
-
     public Page<Product> findAllProducts(Pageable page) {
         return this.productRepository.findAll(page);
-    }
-
-    public Page<Product> findAllProducts(Pageable page, String name) {
-        return this.productRepository.findAll(this.nameLike(name),page);
     }
 
     public Product findById(long id) {
@@ -162,5 +150,58 @@ public class ProductService {
 
     public long count() {
         return this.productRepository.count();
+    }
+
+    // specification
+    // public Page<Product> findAllProductsWithSpec(Pageable page, String name) {
+    // return this.productRepository.findAll(ProductSpecs.nameLike(name),page);
+    // }
+
+    // public Page<Product> findAllProductsByFactoryWithSpec(Pageable page, String
+    // factory) {
+    // return
+    // this.productRepository.findAll(ProductSpecs.filterByFactory(factory),page);
+    // }
+
+    // public Page<Product> findAllProductsByPriceWithSpec(Pageable page, double
+    // start, double end) {
+    // return this.productRepository.findAll(ProductSpecs.filterByPrice(start,
+    // end),page);
+    // }
+
+    // public Page<Product> findAllProductsByFactoryPriceWithSpec(Pageable
+    // page,String factory, double start, double end) {
+    // return
+    // this.productRepository.findAll(ProductSpecs.filterByPriceAndFactory(factory,
+    // start, end),page);
+    // }
+
+    // case 1
+    // public Page<Product> findAllProductsWithSpec(Pageable page, double min) {
+    // return this.productRepository.findAll(ProductSpecs.minPrice(min),page);
+    // }
+
+    // // case 2
+    // public Page<Product> findAllProductsWithSpec(Pageable page, double max) {
+    // return this.productRepository.findAll(ProductSpecs.maxPrice(max),page);
+    // }
+
+    // case 3
+    // public Page<Product> findAllProductsWithSpec(Pageable page, String fac) {
+    // return this.productRepository.findAll(ProductSpecs.matchFactory(fac),page);
+    // }
+
+    // // case 4
+    // public Page<Product> findAllProductsWithSpec(Pageable page, List<String>
+    // factory) {
+    // return
+    // this.productRepository.findAll(ProductSpecs.matchListFactory(factory),page);
+    // }
+
+    // case 5
+    public Page<Product> findAllProductsWithSpec(Pageable page, List<String> price) {
+        if(price.isEmpty()) 
+            this.productRepository.findAll();
+        return this.productRepository.findAll(ProductSpecs.matchListPrice(price),page);
     }
 }
