@@ -2,7 +2,6 @@ package vn.hoidanit.laptopshop.service.specification;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -13,11 +12,11 @@ import vn.hoidanit.laptopshop.domain.Product_;
 
 public class ProductSpecs {
 
-    // public static Specification<Product> nameLike(String name) {
-    //     return (root, query, createriaBuilder) -> {
-    //         return createriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
-    //     };
-    // }
+    public static Specification<Product> nameLike(String name) {
+        return (root, query, createriaBuilder) -> {
+            return createriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
+        };
+    }
 
     // // for factory and use purpose(mục đích sử dụng)
     // public static Specification<Product> filterByFactory(String factory) {
@@ -74,35 +73,83 @@ public class ProductSpecs {
         };
     }
 
+    public static Specification<Product> matchListTarget(List<String> target) {
+        return (root, query, createriaBuilder) -> {
+            return createriaBuilder.in(root.get(Product_.TARGET)).value(target);
+        };
+    }
+
+
     // case 5
+    public static Specification<Product> matchPrice(String price) {
+        return (root, query, createriaBuilder) -> {
+            
+            double min = 0, max = 0;
+            switch (price) {
+                case "duoi-10-trieu":
+                    min = 0;
+                    max = 10000000;
+                    break;
+                case "10-toi-15-trieu":
+                    min = 10000000;
+                    max = 15000000;
+                    break;
+                case "15-toi-20-trieu":
+                    min = 15000000;
+                    max = 20000000;
+                    break;
+                case "tren-20-trieu":
+                    min = 20000000;
+                    max = 200000000;
+                    break;
+                // and more case as needed
+            }
+            if(min != 0 && max != 0){
+                return createriaBuilder.between(root.get(Product_.PRICE), min, max);
+            }
+            return null;
+
+           
+        };
+    }
+
+    // case 6
     public static Specification<Product> matchListPrice(List<String> prices) {
         return (root, query, createriaBuilder) -> {
-
             List<Predicate> predicates = new ArrayList<>();
             Predicate predicate;
             for (String price : prices) {
-                if(price.equals("duoi-10-trieu")){
-                    predicate = createriaBuilder.lessThan(root.get(Product_.PRICE), 10000000);
-                    predicates.add(predicate);
+                double min = 0, max = 0;
+                switch (price) {
+                    case "duoi-10-trieu":
+                        min = 0;
+                        max = 10000000;
+                        break;
+                    case "10-toi-15-trieu":
+                        min = 10000000;
+                        max = 15000000;
+                        break;
+                    case "15-toi-20-trieu":
+                        min = 15000000;
+                        max = 20000000;
+                        break;
+                    case "tren-20-trieu":
+                        min = 20000000;
+                        max = 200000000;
+                        break;
+                    // and more case as needed
                 }
-                else if(price.equals("10-toi-15-trieu")){
-                    predicate = createriaBuilder.and(createriaBuilder.gt(root.get(Product_.PRICE), 10000000),
-                                                createriaBuilder.le(root.get(Product_.PRICE), 15000000));
-                    predicates.add(predicate);
+                if(min != 0 && max != 0){
+                    predicate = createriaBuilder.between(root.get(Product_.PRICE), min, max);
+                    predicates.add(predicate); 
                 }
-                else if(price.equals("15-toi-20-trieu")){
-                    predicate = createriaBuilder.and(createriaBuilder.gt(root.get(Product_.PRICE), 15000000),
-                                                createriaBuilder.le(root.get(Product_.PRICE), 20000000));
-                    predicates.add(predicate);                            
-                }
-                else if(price.equals("tren-20-trieu")){
-                    predicate = createriaBuilder.greaterThan(root.get(Product_.PRICE), 20000000);
-                    predicates.add(predicate);
-                }
+                
             }
             
             return createriaBuilder.or(predicates.toArray(new Predicate[0]));
         };
     }
+
+    
 
 }

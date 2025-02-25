@@ -1,10 +1,12 @@
 package vn.hoidanit.laptopshop.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
@@ -12,6 +14,7 @@ import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.hoidanit.laptopshop.repository.CartDetailRepositoty;
 import vn.hoidanit.laptopshop.repository.CartRepositoty;
 import vn.hoidanit.laptopshop.repository.ProductRepository;
@@ -153,9 +156,28 @@ public class ProductService {
     }
 
     // specification
-    // public Page<Product> findAllProductsWithSpec(Pageable page, String name) {
-    // return this.productRepository.findAll(ProductSpecs.nameLike(name),page);
-    // }
+    public Page<Product> findAllProductsWithSpec(Pageable page, ProductCriteriaDTO productCriteriaDTO) {
+        if(productCriteriaDTO.getTarget() == null
+        && productCriteriaDTO.getFactory() == null
+        && productCriteriaDTO.getPrice() == null){
+            return this.productRepository.findAll(page);
+        }
+
+        Specification<Product> combinedSpec = Specification.where(null);
+        if(productCriteriaDTO.getTarget() != null && productCriteriaDTO.getTarget().isPresent()){
+            Specification<Product> currentSpecs = ProductSpecs.matchListTarget(Arrays.asList(productCriteriaDTO.getTarget().get().split(",")));
+            combinedSpec = combinedSpec.and(currentSpecs);
+        }
+        else if(productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()){
+            Specification<Product> currentSpecs = ProductSpecs.matchListFactory(Arrays.asList(productCriteriaDTO.getFactory().get().split(",")));
+            combinedSpec = combinedSpec.and(currentSpecs);
+        }
+        else if(productCriteriaDTO.getPrice() != null && productCriteriaDTO.getPrice().isPresent()){
+            Specification<Product> currentSpecs = ProductSpecs.matchListFactory(Arrays.asList(productCriteriaDTO.getPrice().get().split(",")));
+            combinedSpec = combinedSpec.and(currentSpecs);
+        }
+        return this.productRepository.findAll(combinedSpec, page);
+    }
 
     // public Page<Product> findAllProductsByFactoryWithSpec(Pageable page, String
     // factory) {
@@ -198,10 +220,17 @@ public class ProductService {
     // this.productRepository.findAll(ProductSpecs.matchListFactory(factory),page);
     // }
 
-    // case 5
-    public Page<Product> findAllProductsWithSpec(Pageable page, List<String> price) {
-        if(price.isEmpty()) 
-            this.productRepository.findAll();
-        return this.productRepository.findAll(ProductSpecs.matchListPrice(price),page);
-    }
+    // // case 5
+    // public Page<Product> findAllProductsWithSpec(Pageable page, String price) {
+    //     if(price.isEmpty()) 
+    //        this.productRepository.findAll();
+    //     return this.productRepository.findAll(ProductSpecs.matchPrice(price),page);
+    // }
+
+    // // case 6
+    // public Page<Product> findAllProductsWithSpec(Pageable page, List<String> price) {
+    //     if(price.isEmpty()) 
+    //         this.productRepository.findAll();
+    //     return this.productRepository.findAll(ProductSpecs.matchListPrice(price),page);
+    // }
 }
