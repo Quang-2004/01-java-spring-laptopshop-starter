@@ -135,14 +135,14 @@
     // add active class to header
     const navElement = $("#navbarCollapse");
     const currentUrl = window.location.pathname;
-    navElement.find('a.nav-link').each(function (){
+    navElement.find('a.nav-link').each(function () {
         const link = $(this); // Get the current link in the loop
         const href = link.attr('href'); // Get the href attribute of the link
 
-        if(href === currentUrl){
+        if (href === currentUrl) {
             link.addClass('active'); // Add 'active' class if the href matches the currentUrl
         }
-        else{
+        else {
             link.removeClass('active'); // Remove 'active' class if the href does not matches the currentUrl
         }
     });
@@ -166,7 +166,7 @@
             }
         }
         const input = button.parent().parent().find('input');
-        input.val(newVal); 
+        input.val(newVal);
 
         //set form index
         const index = input.attr("data-cart-detail-index")
@@ -223,59 +223,97 @@
         formatted = formatted.replace(/\./g, ',');
         return formatted;
     }
-
-    // handle filter Products
-    $('#btnFilter').click(function(event){
-        event.preventDefault();
-        
-        let factoryArr = [];
-        let targetArr = [];
-        let priceArr = [];
-
-        // factory filter
-        $("#factoryFilter .form-check-input:checked").each(function(){
-            factoryArr.push($(this).val());
-        });
-
-        // target filter
-        $("#targetFilter .form-check-input:checked").each(function(){
-            targetArr.push($(this).val());
-        });
-
-        // price filter
-        $("#priceFilter .form-check-input:checked").each(function(){
-            priceArr.push($(this).val());
-        });
-
-        // sort order
-        let sortValue = $('input[name="radio-sort"]:checked').val();
-
+    $(document).ready(function () {
+        // Restore state from URL when page loads
         const currentUrl = new URL(window.location.href);
         const searchParams = currentUrl.searchParams;
 
-        // Add or update query paragrams
-        searchParams.set('page', '1');
-        searchParams.set('sort', sortValue);
+        // Get values from URL
+        const factoryValues = searchParams.get('factory') ? searchParams.get('factory').split(',') : [];
+        const targetValues = searchParams.get('target') ? searchParams.get('target').split(',') : [];
+        const priceValues = searchParams.get('price') ? searchParams.get('price').split(',') : [];
+        const sortValue = searchParams.get('sort') || 'khong-sap-xep'; // Giá trị mặc định nếu không có
 
-        // reset 
-        searchParams.delete('factory');
-        searchParams.delete('target');
-        searchParams.delete('price');
+        // Khôi phục trạng thái checkbox cho factoryFilter
+        // Restore state checkbox for factoryFilter
+        $("#factoryFilter .form-check-input").each(function () {
+            if (factoryValues.includes($(this).val())) {
+                $(this).prop('checked', true);
+            }
+        });
 
-        if(factoryArr.length > 0){
-            searchParams.set('factory', factoryArr.join(','));
-        } 
-        if(targetArr.length > 0){
-            searchParams.set('target', targetArr.join(','));
-        } 
-        if(priceArr.length > 0){
-            searchParams.set('price', priceArr.join(','));
-        } 
+        // Restore state checkbox for targetFilter
+        $("#targetFilter .form-check-input").each(function () {
+            if (targetValues.includes($(this).val())) {
+                $(this).prop('checked', true);
+            }
+        });
 
-        // Update the URL and reload the page
-        window.location.href = currentUrl.toString();
+        // Restore state checkbox for priceFilter
+        $("#priceFilter .form-check-input").each(function () {
+            if (priceValues.includes($(this).val())) {
+                $(this).prop('checked', true);
+            }
+        });
 
+        // Restore state for radio sort
+        $(`input[name="radio-sort"][value="${sortValue}"]`).prop('checked', true);
+
+
+        // handle filter Products
+        $('#btnFilter').click(function (event) {
+            event.preventDefault();
+
+            let factoryArr = [];
+            let targetArr = [];
+            let priceArr = [];
+
+            // factory filter
+            $("#factoryFilter .form-check-input:checked").each(function () {
+                factoryArr.push($(this).val());
+            });
+
+            // target filter
+            $("#targetFilter .form-check-input:checked").each(function () {
+                targetArr.push($(this).val());
+            });
+
+            // price filter
+            $("#priceFilter .form-check-input:checked").each(function () {
+                priceArr.push($(this).val());
+            });
+
+            // sort order
+            let sortValue = $('input[name="radio-sort"]:checked').val();
+
+            const currentUrl = new URL(window.location.href);
+            const searchParams = currentUrl.searchParams;
+
+            // Add or update query paragrams
+            searchParams.set('page', '1');
+            searchParams.set('sort', sortValue);
+
+            // reset 
+            searchParams.delete('factory');
+            searchParams.delete('target');
+            searchParams.delete('price');
+
+            if (factoryArr.length > 0) {
+                searchParams.set('factory', factoryArr.join(','));
+            }
+            if (targetArr.length > 0) {
+                searchParams.set('target', targetArr.join(','));
+            }
+            if (priceArr.length > 0) {
+                searchParams.set('price', priceArr.join(','));
+            }
+
+            // Update the URL and reload the page
+            window.location.href = currentUrl.toString();
+
+        });
     });
+
 
 })(jQuery);
 

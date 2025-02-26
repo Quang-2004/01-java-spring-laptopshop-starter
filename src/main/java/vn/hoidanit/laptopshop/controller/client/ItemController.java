@@ -218,9 +218,10 @@ public class ItemController {
         }        
 
         Page<Product> prs = this.productService.findAllProductsWithSpec(pageable, productCriteriaDTO);
-       
+        long quantityProduct = prs.getTotalElements();
     
         List<Product> listProducts = prs.getContent();
+        
 
         String qs = request.getQueryString();
         if(qs != null && !qs.isBlank()){
@@ -229,6 +230,7 @@ public class ItemController {
         }
 
         model.addAttribute("products", listProducts);
+        model.addAttribute("quantityProduct", quantityProduct);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", prs.getTotalPages());
         model.addAttribute("queryString", qs);

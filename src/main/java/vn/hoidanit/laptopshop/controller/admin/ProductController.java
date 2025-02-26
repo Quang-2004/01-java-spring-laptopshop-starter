@@ -54,7 +54,7 @@ public class ProductController {
             // TODO: handle exception
         }
 
-        Pageable pageable = PageRequest.of(page - 1, 2);
+        Pageable pageable = PageRequest.of(page - 1, 100);
         Page<Product> prs = this.productService.findAllProducts(pageable);
 
         List<Product> listProducts = prs.getContent();

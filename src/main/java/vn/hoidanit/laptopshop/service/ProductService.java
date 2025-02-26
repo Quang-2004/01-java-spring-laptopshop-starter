@@ -168,11 +168,11 @@ public class ProductService {
             Specification<Product> currentSpecs = ProductSpecs.matchListTarget(Arrays.asList(productCriteriaDTO.getTarget().get().split(",")));
             combinedSpec = combinedSpec.and(currentSpecs);
         }
-        else if(productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()){
+        if(productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()){
             Specification<Product> currentSpecs = ProductSpecs.matchListFactory(Arrays.asList(productCriteriaDTO.getFactory().get().split(",")));
             combinedSpec = combinedSpec.and(currentSpecs);
         }
-        else if(productCriteriaDTO.getPrice() != null && productCriteriaDTO.getPrice().isPresent()){
+        if(productCriteriaDTO.getPrice() != null && productCriteriaDTO.getPrice().isPresent()){
             Specification<Product> currentSpecs = ProductSpecs.matchListFactory(Arrays.asList(productCriteriaDTO.getPrice().get().split(",")));
             combinedSpec = combinedSpec.and(currentSpecs);
         }

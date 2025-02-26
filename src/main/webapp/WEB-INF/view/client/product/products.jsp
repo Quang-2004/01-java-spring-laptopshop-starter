@@ -194,8 +194,24 @@
                                         </div>
                                         <div class="col-lg-8">
                                             <div class="row g-4">
+                                                <c:if test="${totalPages eq 0}">
+                                                    <div class="container">
+                                                        <div class="row d-flex justify-content-center align-items-center" style="min-height: 300px;">
+                                                            <div class="col text-center">
+                                                                <img src="/client/img/cant-find-product.png" alt="Can't find product" style="width: 400px; height: 270px;"> <br>
+                                                                Rất tiếc, chúng tôi không tìm thấy sản phẩm.
+                                                            </div>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+
+                                                <c:if test="${quantityProduct gt 0}">
+                                                    <span>Tìm thấy <strong>${quantityProduct}</strong> kết quả</span>
+                                                </c:if>
+                                                
                                                 <c:forEach var="product" items="${products}">
-                                                    <div class="col-md-6 col-lg-4 col-xl-4">
+                                                    <div class="col-6 col-md-6 col-lg-4 col-xl-4">
                                                         <div class="rounded position-relative fruite-item">
                                                             <div class="fruite-img">
                                                                 <a href="/product/${product.id}">
@@ -241,9 +257,7 @@
                                                 </c:forEach>
                                             </div>
                                             <!--PAGINATION-->
-                                            <c:if test="${totalPages eq 0}">
-                                                <img src="https://cdn.dribbble.com/users/47195/screenshots/524523/cantfind.jpg" alt="">
-                                            </c:if>
+                                            
                                             <c:if test="${totalPages gt 0}">
                                                 <div class="col-12">
                                                     <div class="pagination d-flex justify-content-center mt-5">
@@ -265,6 +279,7 @@
                                             </c:if>
                                             
                                             <!--END PAGINATION-->
+                                            
                                         </div>
                                     </div>
                                 </div>

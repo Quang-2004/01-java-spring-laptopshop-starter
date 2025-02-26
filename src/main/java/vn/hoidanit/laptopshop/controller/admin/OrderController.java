@@ -49,7 +49,7 @@ public class OrderController {
             // TODO: handle exception
         }
 
-        Pageable pageable = PageRequest.of(page - 1, 2);
+        Pageable pageable = PageRequest.of(page - 1, 100);
         Page<Order> prs = this.orderService.findAll(pageable);
 
         List<Order> orders = prs.getContent();
