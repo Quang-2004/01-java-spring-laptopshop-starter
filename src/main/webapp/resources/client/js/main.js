@@ -297,6 +297,7 @@
             searchParams.delete('factory');
             searchParams.delete('target');
             searchParams.delete('price');
+            searchParams.delete('search');
 
             if (factoryArr.length > 0) {
                 searchParams.set('factory', factoryArr.join(','));

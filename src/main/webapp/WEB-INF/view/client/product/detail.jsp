@@ -47,7 +47,7 @@
 
                 <jsp:include page="../layout/header.jsp" />
 
-
+                
 
                 <!-- Single Product Start -->
                 <div class="container-fluid py-5 mt-5">
@@ -180,7 +180,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                     </div>
                 </div>
                 <!-- Single Product End -->

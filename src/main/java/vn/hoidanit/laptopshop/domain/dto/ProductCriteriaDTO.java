@@ -8,6 +8,7 @@ public class ProductCriteriaDTO {
     private Optional<String> target;
     private Optional<String> price;
     private Optional<String> sort;
+    private Optional<String> search;
 
 
     public Optional<String> getPage() {
@@ -39,6 +40,12 @@ public class ProductCriteriaDTO {
     }
     public void setSort(Optional<String> sort) {
         this.sort = sort;
+    }
+    public Optional<String> getSearch() {
+        return search;
+    }
+    public void setSearch(Optional<String> search) {
+        this.search = search;
     }
     
 

@@ -1,5 +1,31 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+        <!-- Modal Search Start -->
+        <!-- <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <form action="/products" method="GET">
+                                <input type="search" class="form-control p-3" placeholder="keywords"
+                                    aria-describedby="search-icon-1" name="search">
+                                <span id="search-icon-1" class="input-group-text p-3"><i
+                                        class="fa fa-search"></i></span>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        
+        <!-- Modal Search End -->
+
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
             <div class="container px-0">
@@ -19,11 +45,19 @@
                         </div>
                         <div class="d-flex m-3 me-0">
                             <c:if test="${not empty pageContext.request.userPrincipal}">
-                                <button
-                                    class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
-                                    data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                        class="fas fa-search text-primary"></i></button>
-                                <a href="/cart" class="position-relative me-4 my-auto">
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <form action="/products" method="get" class="flex-grow-1 me-3">
+                                        <div class="input-group shadow-sm" style="max-width: 500px;">
+                                            <input type="search" class="form-control py-3 px-4 border-0 rounded-start" 
+                                                   placeholder="Nhập từ khóa..." 
+                                                   name="search">
+                                            <span id="search-icon-1" class="input-group-text py-3 px-4 text-white rounded-end" style="color: rgb(34, 148, 38) !important;">
+                                                <i class="fa fa-search fs-5"></i>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <a href="/cart" class="position-relative me-4 my-auto ">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                     <span
                                         class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
@@ -76,7 +110,9 @@
                             </c:if>
                             <c:if test="${empty pageContext.request.userPrincipal}">
                                 <h5><a href="/login">Đăng nhập</a></h5>
-                                <h5><p> | </p></h5>
+                                <h5>
+                                    <p> | </p>
+                                </h5>
                                 <h5><a href="/register">Đăng ký</a></h5>
                             </c:if>
 

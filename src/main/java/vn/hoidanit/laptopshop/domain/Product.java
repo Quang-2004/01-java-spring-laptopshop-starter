@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
@@ -48,6 +50,11 @@ public class Product {
     private String factory;
 
     private String target;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 
 
     public Product() {
@@ -125,13 +132,14 @@ public class Product {
     public void setTarget(String target) {
         this.target = target;
     }
-    
-    @Override
-    public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", price=" + price + ", image=" + image + ", detailDesc="
-                + detailDesc + ", shortDesc=" + shortDesc + ", quantity=" + quantity + ", sold=" + sold + ", factory="
-                + factory + ", target=" + target + "]";
+    public Category getCategory() {
+        return category;
     }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
+    
 
     
 

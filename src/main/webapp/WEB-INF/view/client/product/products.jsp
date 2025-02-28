@@ -47,7 +47,7 @@
 
                 <jsp:include page="../layout/header.jsp" />
 
-
+               
 
                 <!-- Single Product Start -->
                 <div class="container-fluid py-5 mt-5">
@@ -206,7 +206,7 @@
                                                     </div>
                                                 </c:if>
 
-                                                <c:if test="${quantityProduct gt 0}">
+                                                <c:if test="${quantityProducts gt 0}">
                                                     <span>Tìm thấy <strong>${quantityProduct}</strong> kết quả</span>
                                                 </c:if>
                                                 

@@ -11,8 +11,8 @@
                     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                     <meta name="description" content="" />
                     <meta name="author" content="" />
-                    <title>Dashboard - SB Product</title>
-                    <link href="../css/styles.css" rel="stylesheet" />
+                    <title>Dashboard - Search Product</title>
+                    <link href="/css/styles.css" rel="stylesheet" />
                     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
                         crossorigin="anonymous"></script>
                     <style>
@@ -33,31 +33,40 @@
                                 <div class="container-fluid px-4">
                                     <h1 class="mt-4">Dashboard</h1>
                                     <ol class="breadcrumb mb-4">
-                                        <li class="breadcrumb-item active"><a href="/admin">Dashboard</a> / Products
+                                        <li class="breadcrumb-item active">
+                                            <a href="/admin">Dashboard</a> /
+                                            <a href="/admin/product">Products</a> /
+                                            Search Product
                                         </li>
+                                    </ol>
+                                    </li>
                                     </ol>
                                     <div class="row">
                                         <div class="col-12 mx-auto">
                                             <div class="d-flex justify-content-between">
                                                 <h2>Table Products</h2>
                                                 <div class="d-flex align-items-center justify-content-start">
-                                                    <form action="/admin/product/search" method="get" class="flex-grow-1 me-3">
+                                                    <form action="/admin/product/search" method="get"
+                                                        class="flex-grow-1 me-3">
                                                         <div class="input-group shadow-sm" style="max-width: 500px;">
-                                                            <input type="search" class="form-control py-3 px-4 border-0 rounded-start" 
-                                                                   placeholder="Nhập từ khóa..." 
-                                                                   name="search">
-                                                            <span id="search-icon-1" class="input-group-text py-3 px-4 text-white rounded-end" style="color: rgb(34, 148, 38) !important;">
+                                                            <input type="search"
+                                                                class="form-control py-3 px-4 border-0 rounded-start"
+                                                                placeholder="Nhập từ khóa..." name="search">
+                                                            <span id="search-icon-1"
+                                                                class="input-group-text py-3 px-4 text-white rounded-end"
+                                                                style="color: rgb(34, 148, 38) !important;">
                                                                 <i class="fa fa-search fs-5"></i>
                                                             </span>
                                                         </div>
                                                     </form>
                                                 </div>
-                                                <button type="button" class="btn btn-primary"><a
-                                                        href="/admin/product/create" class="myLink">Create a
-                                                        product</a></button>
+
 
                                             </div>
                                             <hr>
+                                            <c:if test="${quantityProducts gt 0}">
+                                                <h5>Tìm thấy <strong>${quantityProducts}</strong> kết quả</h5> <br>
+                                            </c:if>
                                             <table class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
@@ -95,7 +104,8 @@
                                                 <ul class="pagination justify-content-center">
                                                     <li class="page-item">
                                                         <a class="page-link ${currentPage eq 1 ? 'disabled ' : ''}"
-                                                            href="/admin/product?page=${currentPage - 1}" aria-label="Previous">
+                                                            href="/admin/product?page=${currentPage - 1}"
+                                                            aria-label="Previous">
                                                             <span aria-hidden="true">&laquo;</span>
                                                         </a>
                                                     </li>
@@ -113,7 +123,8 @@
 
                                                     <li class="page-item">
                                                         <a class="page-link ${currentPage eq totalPages ? 'disabled ' : ''}"
-                                                            href="/admin/product?page=${currentPage + 1}" aria-label="Next">
+                                                            href="/admin/product?page=${currentPage + 1}"
+                                                            aria-label="Next">
                                                             <span aria-hidden="true">&raquo;</span>
                                                         </a>
                                                     </li>

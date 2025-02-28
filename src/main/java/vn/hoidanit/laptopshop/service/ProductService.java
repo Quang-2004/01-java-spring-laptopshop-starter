@@ -157,26 +157,39 @@ public class ProductService {
 
     // specification
     public Page<Product> findAllProductsWithSpec(Pageable page, ProductCriteriaDTO productCriteriaDTO) {
-        if(productCriteriaDTO.getTarget() == null
-        && productCriteriaDTO.getFactory() == null
-        && productCriteriaDTO.getPrice() == null){
+        if (productCriteriaDTO.getTarget() == null
+                && productCriteriaDTO.getFactory() == null
+                && productCriteriaDTO.getPrice() == null
+                && productCriteriaDTO.getSearch() == null) {
             return this.productRepository.findAll(page);
         }
 
         Specification<Product> combinedSpec = Specification.where(null);
-        if(productCriteriaDTO.getTarget() != null && productCriteriaDTO.getTarget().isPresent()){
-            Specification<Product> currentSpecs = ProductSpecs.matchListTarget(Arrays.asList(productCriteriaDTO.getTarget().get().split(",")));
+        if (productCriteriaDTO.getSearch() != null && productCriteriaDTO.getSearch().isPresent()) {
+            Specification<Product> currentSpecs = ProductSpecs
+                    .nameLike(productCriteriaDTO.getSearch().get());
             combinedSpec = combinedSpec.and(currentSpecs);
         }
-        if(productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()){
-            Specification<Product> currentSpecs = ProductSpecs.matchListFactory(Arrays.asList(productCriteriaDTO.getFactory().get().split(",")));
+        if (productCriteriaDTO.getTarget() != null && productCriteriaDTO.getTarget().isPresent()) {
+            Specification<Product> currentSpecs = ProductSpecs
+                    .matchListTarget(Arrays.asList(productCriteriaDTO.getTarget().get().split(",")));
             combinedSpec = combinedSpec.and(currentSpecs);
         }
-        if(productCriteriaDTO.getPrice() != null && productCriteriaDTO.getPrice().isPresent()){
-            Specification<Product> currentSpecs = ProductSpecs.matchListFactory(Arrays.asList(productCriteriaDTO.getPrice().get().split(",")));
+        if (productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()) {
+            Specification<Product> currentSpecs = ProductSpecs
+                    .matchListFactory(Arrays.asList(productCriteriaDTO.getFactory().get().split(",")));
+            combinedSpec = combinedSpec.and(currentSpecs);
+        }
+        if (productCriteriaDTO.getPrice() != null && productCriteriaDTO.getPrice().isPresent()) {
+            Specification<Product> currentSpecs = ProductSpecs
+                    .matchListPrice(Arrays.asList(productCriteriaDTO.getPrice().get().split(",")));
             combinedSpec = combinedSpec.and(currentSpecs);
         }
         return this.productRepository.findAll(combinedSpec, page);
+    }
+
+    public Page<Product> findAllProductsByNameWithSpec(Pageable page, String name) {
+        return this.productRepository.findAll(ProductSpecs.nameLike(name), page);
     }
 
     // public Page<Product> findAllProductsByFactoryWithSpec(Pageable page, String
@@ -222,15 +235,17 @@ public class ProductService {
 
     // // case 5
     // public Page<Product> findAllProductsWithSpec(Pageable page, String price) {
-    //     if(price.isEmpty()) 
-    //        this.productRepository.findAll();
-    //     return this.productRepository.findAll(ProductSpecs.matchPrice(price),page);
+    // if(price.isEmpty())
+    // this.productRepository.findAll();
+    // return this.productRepository.findAll(ProductSpecs.matchPrice(price),page);
     // }
 
     // // case 6
-    // public Page<Product> findAllProductsWithSpec(Pageable page, List<String> price) {
-    //     if(price.isEmpty()) 
-    //         this.productRepository.findAll();
-    //     return this.productRepository.findAll(ProductSpecs.matchListPrice(price),page);
+    // public Page<Product> findAllProductsWithSpec(Pageable page, List<String>
+    // price) {
+    // if(price.isEmpty())
+    // this.productRepository.findAll();
+    // return
+    // this.productRepository.findAll(ProductSpecs.matchListPrice(price),page);
     // }
 }

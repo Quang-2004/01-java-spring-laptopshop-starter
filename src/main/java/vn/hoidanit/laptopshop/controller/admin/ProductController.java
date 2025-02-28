@@ -59,7 +59,7 @@ public class ProductController {
 
         List<Product> listProducts = prs.getContent();
 
-        model.addAttribute("listProducts", listProducts);
+        model.addAttribute("products", listProducts);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", prs.getTotalPages());
 
@@ -167,6 +167,38 @@ public class ProductController {
     public String deleteProductPage(Model model, @ModelAttribute("newProduct") Product newProduct) {
         this.productService.deleteById(newProduct.getId());
         return "redirect:/admin/product";
+    }
+
+    @GetMapping("/admin/product/search")
+    public String getSearchProduct(Model model,
+    @RequestParam("page") Optional<String> pageOptional,
+    @RequestParam("search") Optional<String> searchOptional){
+        int page = 1;
+        try {
+            if(pageOptional.isPresent()){
+                page = Integer.parseInt(pageOptional.get());
+            }
+            else{
+                // page = 1
+            }
+        } catch (Exception e) {
+            // page = 1
+            // TODO: handle exception
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, 100);
+        String search = searchOptional.isPresent() ? searchOptional.get() : "";
+        Page<Product> prs = this.productService.findAllProductsByNameWithSpec(pageable, search);
+        long quantityProducts = prs.getTotalElements();
+
+        List<Product> listProducts = prs.getContent();
+
+        model.addAttribute("products", listProducts);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", prs.getTotalPages());
+        model.addAttribute("quantityProducts", quantityProducts);
+
+        return "admin/product/search";
     }
     
     

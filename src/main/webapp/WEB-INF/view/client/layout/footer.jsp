@@ -18,11 +18,10 @@
                         <div class="footer-item">
                             <h4 class="text-light mb-3">KẾT NỐI VỚI LAPTOPSHOP</h4>
                            
-                            <a class="btn-link mt-auto" href="#"><i class="bi bi-facebook"></i></a>
-                            <a class="btn-link mt-auto" href="#"><i class="bi bi-google"></i></a>
-                            <a class="btn-link mt-auto" href="#"><i class="bi bi-github"></i></a>
-                            <a class="btn-link mt-auto" href="#"><i class="bi bi-youtube"></i></a>
-                            <a class="btn-link" href="#"><i class="bi bi-twitter"></i></a>
+                            <a class="btn-link mt-auto icon mx-lg-2" href="#"><i class="bi bi-facebook"></i></a>
+                            <a class="btn-link mt-auto icon mx-lg-2" href="#"><i class="bi bi-google"></i></a>
+                            <a class="btn-link mt-auto icon mx-lg-2" href="#"><i class="bi bi-github"></i></a>
+                            <a class="btn-link mt-auto icon mx-lg-2" href="#"><i class="bi bi-youtube"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">

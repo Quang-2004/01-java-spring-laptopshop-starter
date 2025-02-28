@@ -46,30 +46,6 @@
                 <jsp:include page="../layout/header.jsp" />
 
 
-
-                <!-- Modal Search Start -->
-                <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-fullscreen">
-                        <div class="modal-content rounded-0">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body d-flex align-items-center">
-                                <div class="input-group w-75 mx-auto d-flex">
-                                    <input type="search" class="form-control p-3" placeholder="keywords"
-                                        aria-describedby="search-icon-1">
-                                    <span id="search-icon-1" class="input-group-text p-3"><i
-                                            class="fa fa-search"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal Search End -->
-
                 <jsp:include page="../layout/banner.jsp" />
 
 
@@ -84,11 +60,21 @@
                                 <div class="col-lg-8 text-end">
                                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
                                         <li class="nav-item">
-                                            <a class="d-flex m-2 py-2 bg-light rounded-pill active"
-                                                 href="/products">
+                                            <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill" href="/products?categoryName=all">
                                                 <span class="text-dark" style="width: 130px;">All Products</span>
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="d-flex py-2 m-2 bg-light rounded-pill" data-bs-toggle="pill" href="/products?categoryName=laptop">
+                                                <span class="text-dark" style="width: 130px;">Laptop</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="/products?categoryName=phuKien">
+                                                <span class="text-dark" style="width: 130px;">Phụ kiện</span>
+                                            </a>
+                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -106,9 +92,9 @@
                                                                         class="img-fluid w-100 rounded-top" alt=""></a>
                                                             </div>
                                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                                style="top: 10px; left: 10px;">Laptop</div>
+                                                                style="top: 10px; left: 10px;">${product.category.name}</div>
                                                             <div
-                                                                class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                                class="p-4 border border-secondary border-top-0 rounded-bottom text-start">
                                                                 <h4 style="font-size: 15px" >${product.name}</h4>
                                                                 <p style="display: -webkit-box;
                                                                     -webkit-line-clamp: 2;
@@ -117,8 +103,8 @@
                                                                     text-overflow: ellipsis;
                                                                     font-size: 13px;" >
                                                                 ${product.shortDesc}</p>
-                                                                <div class="d-flex flex-lg-wrap justify-content-center flex-column">
-                                                                    <p style="font-size: 15px; text-align: center; width: 100%;"
+                                                                <div class="d-flex flex-lg-wrap justify-content-start flex-column">
+                                                                    <p style="font-size: 15px; text-align: start; width: 100%;"
                                                                         class="text-dark fs-5 fw-bold mb-2">
                                                                         <fmt:formatNumber type="number"
                                                                             value="${product.price}" /> đ
@@ -130,7 +116,7 @@
                                                                         <input type="hidden"
                                                                             name="${_csrf.parameterName}"
                                                                             value="${_csrf.token}" />
-                                                                        <button href="#" style="text-align: center;"
+                                                                        <button href="#" style="text-align: start;"
                                                                             class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
                                                                                 class="fa fa-shopping-bag me-2 text-primary"></i>
                                                                             Add to cart</button>
@@ -140,6 +126,29 @@
                                                         </div>
                                                     </div>
                                                 </c:forEach>
+                                                <!--PAGINATION-->
+                                            
+                                            <c:if test="${totalPages gt 0}">
+                                                <div class="col-12">
+                                                    <div class="pagination d-flex justify-content-center mt-5">
+    
+                                                        <a href="${currentPage eq 1 ? '#' : '/?page='}${currentPage - 1}"
+                                                            class="rounded">&laquo;</a>
+    
+                                                        <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                                                            <a class="rounded ${currentPage eq loop.index ? 'active ' : ''}"
+                                                                href="/?page=${loop.index}">
+                                                                ${loop.index}
+                                                            </a>
+                                                        </c:forEach>
+    
+                                                        <a href="${currentPage eq totalPages ? '#' : '/?page='}${currentPage + 1}"
+                                                            class="rounded">&raquo;</a>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                            
+                                            <!--END PAGINATION-->
                                             </div>
                                         </div>
                                     </div>
