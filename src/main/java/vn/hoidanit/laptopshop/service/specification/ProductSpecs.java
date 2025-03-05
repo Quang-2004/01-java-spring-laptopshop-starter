@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.persistence.criteria.Predicate;
+import vn.hoidanit.laptopshop.domain.Category;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.Product_;
 
@@ -18,12 +19,12 @@ public class ProductSpecs {
         };
     }
 
-    // // for factory and use purpose(mục đích sử dụng)
-    // public static Specification<Product> filterByFactory(String factory) {
-    //     return (root, query, createriaBuilder) -> {
-    //         return createriaBuilder.equal(root.get(Product_.FACTORY), factory);
-    //     };
-    // }
+    
+    public static Specification<Product> matchCategory(Category category) {
+        return (root, query, createriaBuilder) -> {
+            return createriaBuilder.equal(root.get(Product_.CATEGORY), category);
+        };
+    }
 
     // public static Specification<Product> filterByPrice(double start, double end) {
     //     return (root, query, createriaBuilder) -> {

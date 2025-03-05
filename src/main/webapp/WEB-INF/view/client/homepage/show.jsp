@@ -32,6 +32,11 @@
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
 
+                <style>
+                    .myButton:hover, .my-button.active{
+                        background-color: rgba(242, 218, 39, 0.8) !important;
+                    }
+                </style>
             </head>
 
             <body>
@@ -57,23 +62,32 @@
                                 <div class="col-lg-4 text-start">
                                     <h1>Sản phẩm nổi bật</h1>
                                 </div>
-                                <div class="col-lg-8 text-end">
+                                <div class="col-lg-8 text-end" id="clickButton">
                                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
-                                        <li class="nav-item">
-                                            <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill" href="/products?categoryName=all">
-                                                <span class="text-dark" style="width: 130px;">All Products</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="d-flex py-2 m-2 bg-light rounded-pill" data-bs-toggle="pill" href="/products?categoryName=laptop">
-                                                <span class="text-dark" style="width: 130px;">Laptop</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="/products?categoryName=phuKien">
-                                                <span class="text-dark" style="width: 130px;">Phụ kiện</span>
-                                            </a>
-                                        </li>
+                                        <form action="/" method="get">
+                                            <li class="nav-item">
+                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton" data-bs-toggle="pill">
+                                                    <span class="text-dark" style="width: 130px;">All Products</span>
+                                                </button> 
+                                            </li>
+                                        </form>
+                                        <form action="/" method="get">
+                                            <input type="hidden" name="categoryName" value="laptop">
+                                            <li class="nav-item">
+                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton" data-bs-toggle="pill">
+                                                    <span class="text-dark" style="width: 130px;">Laptop</span>
+                                                </button> 
+                                            </li>
+                                        </form>
+                                        <form action="/" method="get">
+                                            <input type="hidden" name="categoryName" value="phu_kien">
+                                            <li class="nav-item">
+                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton" data-bs-toggle="pill">
+                                                    <span class="text-dark" style="width: 130px;">Phụ kiện</span>
+                                                </button> 
+                                            </li>
+                                        </form>
+                                        
                                         
                                     </ul>
                                 </div>
@@ -92,7 +106,7 @@
                                                                         class="img-fluid w-100 rounded-top" alt=""></a>
                                                             </div>
                                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                                style="top: 10px; left: 10px;">${product.category.name}</div>
+                                                                style="top: 10px; left: 10px;">${product.category.content}</div>
                                                             <div
                                                                 class="p-4 border border-secondary border-top-0 rounded-bottom text-start">
                                                                 <h4 style="font-size: 15px" >${product.name}</h4>

@@ -16,6 +16,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String content;
+
     private String name;
 
     @OneToMany(mappedBy = "category")
@@ -45,5 +47,13 @@ public class Category {
         this.products = products;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+    
     
 }

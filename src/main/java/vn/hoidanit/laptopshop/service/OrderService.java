@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
+import vn.hoidanit.laptopshop.domain.Address;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Order;
@@ -52,10 +53,7 @@ public class OrderService {
         return this.orderRepository.findAll(pageable);
     }
 
-    public void handleSaveOrder(HttpSession session,
-            String receiverName,
-            String receiverAddress,
-            String receiverPhone) {
+    public void handleSaveOrder(HttpSession session, Address address) {
 
         // get user
         String username = (String) session.getAttribute("email");
@@ -74,9 +72,9 @@ public class OrderService {
 
             order.setTotalPrice(totalPrice);
             order.setUser(currentUser);
-            order.setReceiverName(receiverName);
-            order.setReceiverPhone(receiverPhone);
-            order.setReveiverAddress(receiverAddress);
+            order.setReceiverName(address.getReceiverName());
+            order.setReceiverPhone(address.getReceiverPhone());
+            order.setReveiverAddress(address.getReceiverAddress());
             order.setStatus("PENDING");
 
             // save Order

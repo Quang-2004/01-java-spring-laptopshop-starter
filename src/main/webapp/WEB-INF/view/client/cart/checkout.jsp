@@ -118,24 +118,40 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <div class="row g-4 mt-5">
                                 <div class="col-md-6">
-                                    <h2>Thông tin người nhận</h2>
-    
-                                    <div class="mb-3">
-                                        <label class="form-label">Tên người nhận</label>
-                                        <input class="form-control" name="receiverName" required>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="container py-3 mt-2">
+                                                    <div class="card">
+                                                        <div class="card-body cart">
+                                                            <div class="col-sm-12 empty-cart-cls text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                                                    height="32" fill="currentColor" style="color: red;"
+                                                                    class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+                                                                </svg>
+                                                                <span style="color: red;">Địa chỉ nhận hàng</span> <br>
+                                                                <c:if test="${empty myAddress}">
+                                                                    <a href="/account/add-address"><i class="bi bi-plus"></i> <span>Thêm địa chỉ</span></a>
+                                                                </c:if>
+                                                                <c:if test="${not empty myAddress}">
+                                                                    <span>${myAddress.receiverName}(${myAddress.receiverPhone}) ${myAddress.receiverAddress}</span> <br>
+                                                                    <a href="/account/change-address"><i class="bi bi-plus"></i> <span>Thay đổi</span></a>
+                                                                </c:if>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <i class="bi bi-arrow-left"></i>
+                                                        <a href="/cart">Quay lại giỏ hàng</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Địa chỉ người nhận</label>
-                                        <input class="form-control" name="receiverAddress" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Số điện thoại</label>
-                                        <input class="form-control" name="receiverPhone" required>
-                                    </div>
-                                    <i class="bi bi-arrow-left"></i>
-                                    <a href="/cart">Quay lại giỏ hàng</a>
                                 </div>
-    
+
                                 <div class="col-md-6 justify-content-end d-block">
                                     <div class="bg-light rounded">
                                         <div class="p-4">
@@ -160,7 +176,7 @@
                                                 <fmt:formatNumber type="number" value="${totalPrice}" /> đ
                                             </p>
                                         </div>
-    
+
                                         <button
                                             class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
                                             type="submit">Xác nhận thanh toán</button>
@@ -169,7 +185,7 @@
                             </div>
                         </form>
                     </c:if>
-                    
+
 
 
 

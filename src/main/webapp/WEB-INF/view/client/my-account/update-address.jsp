@@ -148,9 +148,11 @@
                     <div class="container">
                         <div class="address-form">
 
-                            <form:form action="/account/add-address" method="POST" modelAttribute="address">
-                                <h2>Địa chỉ mới</h2>
-                                <p>Để đặt hàng, vui lòng thêm địa chỉ mới</p>
+                            <form:form action="/account/update-address" method="POST" modelAttribute="updateAddress">
+                                <h2>Update địa chỉ</h2>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <form:input type="hidden" path="id"/>
+
                                 <c:set var="errorName">
                                     <form:errors cssClass="invalid-feedback" path="receiverName" />
                                 </c:set>
@@ -161,7 +163,7 @@
                                     <form:errors cssClass="invalid-feedback" path="receiverPhone" />
                                 </c:set>
 
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                
 
                                 <form:input type="text" placeholder="Họ và tên" path="receiverName"
                                     class="form-control input-field ${not empty errorName ? 'is-invalid': ''}" />
@@ -183,8 +185,8 @@
                                 <form:checkbox path="defaultAddress" /> 
                                 <span>Đặt làm địa chỉ mặc định</span>
                                 <div class="buttons">
-                                    <a href="/checkout" class="back-btn">Trở Lại</a>
-                                    <button type="submit" class="submit-btn">Hoàn Thành</button>
+                                    <a href="/account/change-address" class="back-btn">Trở Lại</a>
+                                    <button type="submit" class="submit-btn">Update</button>
                                 </div>
                             </form:form>
 

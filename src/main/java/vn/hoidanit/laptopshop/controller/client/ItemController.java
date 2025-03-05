@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import vn.hoidanit.laptopshop.domain.Address;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Order;
@@ -23,6 +24,7 @@ import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.hoidanit.laptopshop.repository.CartDetailRepositoty;
 import vn.hoidanit.laptopshop.repository.CartRepositoty;
+import vn.hoidanit.laptopshop.service.AddressService;
 import vn.hoidanit.laptopshop.service.OrderService;
 import vn.hoidanit.laptopshop.service.ProductService;
 import vn.hoidanit.laptopshop.service.UserService;
@@ -45,15 +47,17 @@ public class ItemController {
     private final UserService userService;
     private final CartDetailRepositoty cartDetailRepositoty;
     private final OrderService orderService;
+    private final AddressService addressService;
 
     
     public ItemController(ProductService productService, CartRepositoty cartRepositoty
-    , UserService userService, CartDetailRepositoty cartDetailRepositoty,  OrderService orderService) {
+    , UserService userService, CartDetailRepositoty cartDetailRepositoty,  OrderService orderService, AddressService addressService) {
         this.productService = productService;
         this.cartRepositoty = cartRepositoty;
         this.userService = userService;
         this.cartDetailRepositoty = cartDetailRepositoty;
         this.orderService = orderService;
+        this.addressService = addressService;
     }
 
     @GetMapping("/product/{id}")
@@ -113,11 +117,15 @@ public class ItemController {
 
     @GetMapping("/checkout")
     public String getCheckOutPage(Model model, HttpServletRequest request) {
+
+
         HttpSession session = request.getSession(false);
 
         String email = (String)session.getAttribute("email"); // username
         // get user
         User currentUser = this.userService.findByEmail(email);
+
+        
         // get cart
         Cart currentCart = this.cartRepositoty.findCartByUser(currentUser);
         List<CartDetail> listCartDetail =  this.cartDetailRepositoty.findByCart(currentCart);
@@ -126,31 +134,68 @@ public class ItemController {
         for (CartDetail cd : listCartDetail) {
             totalPrice += cd.getPrice() * cd.getQuantity();
         }
+
+        // get address
+        Address myAddress = null;
+        List<Address> addresses = this.addressService.findByUser(currentUser);
+        // Check if the user already has an address
+        if(addresses == null || addresses.isEmpty())
+            return "redirect:/account/add-address";
+
+        for (Address address : addresses) {
+            if(address.isDefaultAddress()){
+                myAddress = address;
+                break;
+            }
+        }
         
         model.addAttribute("cartDetails", listCartDetail);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cart", new Cart());
+        model.addAttribute("myAddress", myAddress);
+        model.addAttribute("addresses", addresses);
         
 
         return "client/cart/checkout";
     }
 
     @PostMapping("/confirm-checkout")
-    public String getCheckOutPage(@ModelAttribute("cart") Cart cart) {
+    public String getCheckOutPage(@ModelAttribute("cart") Cart cart, HttpServletRequest request) {
         List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
         this.productService.handleUpdateCartBeforeCheckout(cartDetails);
+
+        // Check if the user already has an address
+        HttpSession session = request.getSession(false);
+        String username = (String) session.getAttribute("email");
+        User currentUser = this.userService.findByEmail(username);
+        List<Address> addresses = this.addressService.findByUser(currentUser);
+        if(addresses == null || addresses.isEmpty()){
+            // add redirect after add-address
+            session.setAttribute("redirectTo", "/checkout");
+            return "redirect:/account/add-address";
+        }
+            
+
         return "redirect:/checkout";
     }
 
     @PostMapping("/place-order")
-    public String handlePlaceOrder(HttpServletRequest request,
-        @RequestParam("receiverName") String receiverName,
-        @RequestParam("receiverAddress") String receiverAddress,
-        @RequestParam("receiverPhone") String receiverPhone) {
+    public String handlePlaceOrder(HttpServletRequest request) {
         
         HttpSession session = request.getSession(false);
+        String username = (String) session.getAttribute("email");
+        User currentUser = this.userService.findByEmail(username);
+        // get address
+        Address myAddress = null;
+        List<Address> addresses = this.addressService.findByUser(currentUser);
+        for (Address address : addresses) {
+            if(address.isDefaultAddress()){
+                myAddress = address;
+                break;
+            }
+        }
 
-        this.orderService.handleSaveOrder(session, receiverName, receiverAddress, receiverPhone);
+        this.orderService.handleSaveOrder(session, myAddress);
         return "redirect:/thanks";
     }
 

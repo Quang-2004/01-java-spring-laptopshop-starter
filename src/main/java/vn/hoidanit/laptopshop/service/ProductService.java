@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
+import vn.hoidanit.laptopshop.domain.Category;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.domain.dto.ProductCriteriaDTO;
@@ -190,6 +191,12 @@ public class ProductService {
 
     public Page<Product> findAllProductsByNameWithSpec(Pageable page, String name) {
         return this.productRepository.findAll(ProductSpecs.nameLike(name), page);
+    }
+
+    public Page<Product> findAllProductsByCategoryWithSpec(Pageable page, Category category) {
+        if(category == null)
+            return this.productRepository.findAll(page);
+        return this.productRepository.findAll(ProductSpecs.matchCategory(category), page);
     }
 
     // public Page<Product> findAllProductsByFactoryWithSpec(Pageable page, String
