@@ -32,9 +32,23 @@
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
 
+                <meta name="_csrf" content="${_csrf.token}" />
+                <!-- default header is X-CSRF_TOKEN-->
+                <meta name="_csrf_header" content="${_csrf.headerName}" />
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css"
+                    rel="stylesheet">
+
+
                 <style>
-                    .myButton:hover, .my-button.active{
-                        background-color: rgba(242, 218, 39, 0.8) !important;
+                    .myButton:hover,
+                    .my-button.active {
+                        background-color: rgba(234, 159, 53, 0.8) !important;
+                    }
+
+                    .page-link.disabled {
+                        color: var(--bs-pagination-disabled-color);
+                        pointer-events: none;
+                        background-color: var(--bs-pagination-disabled-color);
                     }
                 </style>
             </head>
@@ -66,29 +80,32 @@
                                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
                                         <form action="/" method="get">
                                             <li class="nav-item">
-                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton" data-bs-toggle="pill">
+                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton"
+                                                    data-bs-toggle="pill">
                                                     <span class="text-dark" style="width: 130px;">All Products</span>
-                                                </button> 
+                                                </button>
                                             </li>
                                         </form>
                                         <form action="/" method="get">
                                             <input type="hidden" name="categoryName" value="laptop">
                                             <li class="nav-item">
-                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton" data-bs-toggle="pill">
+                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton"
+                                                    data-bs-toggle="pill">
                                                     <span class="text-dark" style="width: 130px;">Laptop</span>
-                                                </button> 
+                                                </button>
                                             </li>
                                         </form>
                                         <form action="/" method="get">
                                             <input type="hidden" name="categoryName" value="phu_kien">
                                             <li class="nav-item">
-                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton" data-bs-toggle="pill">
+                                                <button class="d-flex py-2 m-2 bg-light rounded-pill myButton"
+                                                    data-bs-toggle="pill">
                                                     <span class="text-dark" style="width: 130px;">Phụ kiện</span>
-                                                </button> 
+                                                </button>
                                             </li>
                                         </form>
-                                        
-                                        
+
+
                                     </ul>
                                 </div>
                             </div>
@@ -106,63 +123,68 @@
                                                                         class="img-fluid w-100 rounded-top" alt=""></a>
                                                             </div>
                                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                                style="top: 10px; left: 10px;">${product.category.content}</div>
+                                                                style="top: 10px; left: 10px;">
+                                                                ${product.category.content}</div>
                                                             <div
                                                                 class="p-4 border border-secondary border-top-0 rounded-bottom text-start">
-                                                                <h4 style="font-size: 15px" >${product.name}</h4>
+                                                                <h4 style="font-size: 15px">${product.name}</h4>
                                                                 <p style="display: -webkit-box;
                                                                     -webkit-line-clamp: 2;
                                                                     -webkit-box-orient: vertical;
                                                                     overflow: hidden;
                                                                     text-overflow: ellipsis;
-                                                                    font-size: 13px;" >
-                                                                ${product.shortDesc}</p>
-                                                                <div class="d-flex flex-lg-wrap justify-content-start flex-column">
+                                                                    font-size: 13px;">
+                                                                    ${product.shortDesc}</p>
+                                                                <div
+                                                                    class="d-flex flex-lg-wrap justify-content-start flex-column">
                                                                     <p style="font-size: 15px; text-align: start; width: 100%;"
                                                                         class="text-dark fs-5 fw-bold mb-2">
                                                                         <fmt:formatNumber type="number"
                                                                             value="${product.price}" /> đ
                                                                     </p>
 
-                                                                    <form action="/add-product-to-cart/${product.id}"
+                                                                    <!-- <form action="/add-product-to-cart/${product.id}"
                                                                         method="post">
-                                                                        <!-- csrf token -->
                                                                         <input type="hidden"
                                                                             name="${_csrf.parameterName}"
-                                                                            value="${_csrf.token}" />
-                                                                        <button href="#" style="text-align: start;"
-                                                                            class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                                class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                            Add to cart</button>
-                                                                    </form>
+                                                                            value="${_csrf.token}" /> -->
+                                                                    <button data-product-id="${product.id}" style="text-align: start;"
+                                                                        class="btnAddToCart mx-auto btn border border-secondary rounded-pill px-3 text-primary">
+                                                                        <input type="hidden" class="form-control d-none" 
+                                                                        id="cartDetails0.quantity" value="1" name="quantity"/>
+                                                                        <i
+                                                                            class="fa fa-shopping-bag me-2 text-primary">
+                                                                        </i>
+                                                                        Add to cart</button>
+                                                                    <!-- </form> -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
                                                 <!--PAGINATION-->
-                                            
-                                            <c:if test="${totalPages gt 0}">
-                                                <div class="col-12">
-                                                    <div class="pagination d-flex justify-content-center mt-5">
-    
-                                                        <a href="${currentPage eq 1 ? '#' : '/?page='}${currentPage - 1}"
-                                                            class="rounded">&laquo;</a>
-    
-                                                        <c:forEach begin="1" end="${totalPages}" varStatus="loop">
-                                                            <a class="rounded ${currentPage eq loop.index ? 'active ' : ''}"
-                                                                href="/?page=${loop.index}">
-                                                                ${loop.index}
-                                                            </a>
-                                                        </c:forEach>
-    
-                                                        <a href="${currentPage eq totalPages ? '#' : '/?page='}${currentPage + 1}"
-                                                            class="rounded">&raquo;</a>
+
+                                                <c:if test="${totalPages gt 0}">
+                                                    <div class="col-12">
+                                                        <div class="pagination d-flex justify-content-center mt-5">
+
+                                                            <a href="${currentPage eq 1 ? '#' : '/?page='}${currentPage - 1}"
+                                                                class="rounded">&laquo;</a>
+
+                                                            <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                                                                <a class="rounded ${currentPage eq loop.index ? 'active ' : ''}"
+                                                                    href="/?page=${loop.index}">
+                                                                    ${loop.index}
+                                                                </a>
+                                                            </c:forEach>
+
+                                                            <a href="${currentPage eq totalPages ? '#' : '/?page='}${currentPage + 1}"
+                                                                class="rounded">&raquo;</a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </c:if>
-                                            
-                                            <!--END PAGINATION-->
+                                                </c:if>
+
+                                                <!--END PAGINATION-->
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +204,6 @@
                 <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
                         class="fa fa-arrow-up"></i></a>
 
-
                 <!-- JavaScript Libraries -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -193,6 +214,8 @@
 
                 <!-- Template Javascript -->
                 <script src="/client/js/main.js"></script>
+                <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
             </body>
 
             </html>

@@ -49,7 +49,7 @@
                             <h3>Update a user</h3> <hr>
                             <form:form action="/admin/user/update" method="POST" modelAttribute="updateUser"
                                 enctype="multipart/form-data">
-
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                 <c:set var="errorFullname">
                                     <form:errors path="fullName" cssClass="invalid-feedback"/>
                                 </c:set>

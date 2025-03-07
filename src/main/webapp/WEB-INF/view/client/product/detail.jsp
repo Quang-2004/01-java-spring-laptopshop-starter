@@ -34,6 +34,12 @@
 
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
+
+                <meta name="_csrf" content="${_csrf.token}" />
+                <!-- default header is X-CSRF_TOKEN-->
+                <meta name="_csrf_header" content="${_csrf.headerName}" />
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
+
             </head>
 
             <body>
@@ -98,18 +104,18 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <form action="/add-product-from-view-detail" method="post" modelAttribute="product">
-                                            <!-- csrf token -->
+                                        <!-- <form action="/add-product-from-view-detail" method="post" modelAttribute="product"> -->
+                                            
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                             <input type="text" class="form-control d-none" 
                                                     value="${product.id}" name="id"/>
                                             <input type="text" class="form-control d-none" 
-                                                    id="cartDetails0.quantity" name="quantity"/>
-                                            <button href="#"
-                                                class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+                                                    id="cartDetails0.quantity" value="1" name="quantity"/>
+                                            <button data-product-id="${product.id}"
+                                                class="btnAddToCart btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
                                                     class="fa fa-shopping-bag me-2 text-primary"></i> Thêm vào giỏ
                                                 hàng</button>
-                                        </form>
+                                        <!-- </form> -->
 
                                         <a href="#"
                                             class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
@@ -200,9 +206,11 @@
                 <script src="/client/lib/waypoints/waypoints.min.js"></script>
                 <script src="/client/lib/lightbox/js/lightbox.min.js"></script>
                 <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
-
+                
                 <!-- Template Javascript -->
                 <script src="/client/js/main.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+
             </body>
 
             </html>

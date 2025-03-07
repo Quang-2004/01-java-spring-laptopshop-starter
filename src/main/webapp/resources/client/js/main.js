@@ -315,6 +315,59 @@
         });
     });
 
+    // from homepage page and detail page
+    $('.btnAddToCart').click(function (event) {
+        event.preventDefault();
 
+        if(!isLogin()){
+            $.toast({
+                heading: 'Lỗi thao tác',
+                text: 'Bạn cần đăng nhập tà khoản',
+                position: 'top-right',
+                icon: 'error'
+            })
+            return;
+        }
+
+        const productId = $(this).attr('data-product-id');
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+        const quantity = $("#cartDetails0\\.quantity").val();
+        $.ajax({
+            url: `${window.location.origin}/api/add-product-to-cart`,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            type: "POST",
+            data: JSON.stringify({quantity: quantity, productId: productId}),
+            contentType: "application/json",
+
+            success: function(response){
+                const sum = +response;
+                // update cart
+                $("#sumCart").text(sum)
+                // show message
+                $.toast({
+                    heading: 'Giỏ hàng',
+                    text: 'Thêm sản phẩm vào giỏ hàng thành công',
+                    position: 'top-right',
+                })
+            },
+            error: function (response){
+                alert("có lỗi xảy ra, check code đi mẹ")
+                console.log("error: ", response);
+            }
+        });
+    });
+
+
+    function isLogin() {
+        const navElement = $("#navbarCollapse");
+        const childLogin = navElement.find('a.a-login'); // Sửa newVal thành navElement
+        if (childLogin.length > 0) {
+            return false;
+        }
+        return true;
+    }
 })(jQuery);
 

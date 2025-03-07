@@ -123,7 +123,7 @@ public class ProductSpecs {
                 double min = 0, max = 0;
                 switch (price) {
                     case "duoi-10-trieu":
-                        min = 0;
+                        min = 1;
                         max = 10000000;
                         break;
                     case "10-toi-15-trieu":

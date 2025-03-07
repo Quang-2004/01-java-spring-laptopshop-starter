@@ -64,7 +64,7 @@ public class SecurityConfiguration {
                         // vd: home lấy list product
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
                         .requestMatchers("/", "/login", "/register", "/client/**", "/css/**", "/js/**", "/images/**",
-                                "/product/**")
+                                "/product/**", "/products/**")
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/client/**").hasRole("USER")
